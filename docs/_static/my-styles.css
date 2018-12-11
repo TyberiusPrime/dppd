@@ -1,0 +1,19 @@
+.class, .function{
+	border-bottom: 1px solid black;
+	padding-bottom:3em;
+}
+
+.class dd {
+	padding-left:1em;
+}
+.class .method, .class .attribute {
+	padding-left:2em;
+}
+
+.class dl:nth-child(even) {
+	background-color:#EEEEEE;
+}
+
+.class dl:nth-child(odd) {
+	background-color:#DDDDDD;
+}

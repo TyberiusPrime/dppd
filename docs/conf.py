@@ -35,7 +35,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/mbf_dply")
+module_dir = os.path.join(__location__, "../src/dppd")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -56,6 +56,7 @@ try:
 except Exception as e:
     print("Running `sphinx-apidoc` failed!\n{}".format(e))
 
+import sphinx_bootstrap_theme
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -66,7 +67,8 @@ except Exception as e:
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.todo',
               'sphinx.ext.autosummary', 'sphinx.ext.viewcode', 'sphinx.ext.coverage',
               'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'sphinx.ext.mathjax',
-              'sphinx.ext.napoleon']
+              'sphinx.ext.napoleon',
+              ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -81,7 +83,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'mbf_dply'
+project = u'dppd'
 copyright = u'2018, Florian Finkernagel'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -145,13 +147,32 @@ html_theme_options = {
     'page_width': '1200px'
 }
 
+
+
+html_theme = 'bootstrap'
+
+html_static_path = ["docs/_static"]
+
+
+html_theme_options = {
+    'navbar_title': 'dppd',
+    'globaltoc_depth': 2,
+    'globaltoc_includehidden': 'true',
+    'source_link_position': 'footer',
+    'navbar_sidebarrel': False,
+    'navbar_links': [
+        ('Verbs', 'verbs'),
+        ('Grouping', 'grouping'),
+    ],
+}
+
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 try:
-    from mbf_dply import __version__ as version
+    from dppd import __version__ as version
 except ImportError:
     pass
 else:
@@ -199,7 +220,7 @@ html_static_path = ['_static']
 # html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
-# html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 # html_show_sphinx = True
@@ -216,7 +237,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'mbf_dply-doc'
+htmlhelp_basename = 'dppd-doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -235,7 +256,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'user_guide.tex', u'mbf_dply Documentation',
+  ('index', 'user_guide.tex', u'dppd Documentation',
    u'Florian Finkernagel', 'manual'),
 ]
 
@@ -270,3 +291,12 @@ intersphinx_mapping = {
     'pandas': ('http://pandas.pydata.org/pandas-docs/stable', None),
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
 }
+
+def autodoc_skip_member(app, what, name, obj, skip, options):
+  excl = obj.__doc__ and ':autodoc_skip:' in obj.__doc__
+  return skip or excl
+
+def setup(app):
+    app.add_stylesheet("my-styles.css") # also can be a full URL
+    app.connect('autodoc-skip-member', autodoc_skip_member)
+

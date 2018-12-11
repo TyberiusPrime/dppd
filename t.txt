@@ -1,0 +1,1242 @@
+============================= test session starts ==============================
+platform linux -- Python 3.6.6, pytest-4.0.0, py-1.7.0, pluggy-0.8.0 -- /home/finkernagel/upstream/dev/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/finkernagel/upstream/dppd, inifile: setup.cfg
+plugins: cov-2.6.0
+collecting ... collected 155 items
+
+tests/test_base.py::test_noop PASSED                                     [  0%]
+tests/test_base.py::test_non_df_result PASSED                            [  1%]
+tests/test_base.py::test_nested_dp_pd_calls PASSED                       [  1%]
+tests/test_base.py::test_dp_pd_calls_nested_in_function_calls PASSED     [  2%]
+tests/test_base.py::test_redefining_verb_vars PASSED                     [  3%]
+tests/test_base.py::test_redefining_alias_warns PASSED                   [  3%]
+tests/test_base.py::test_property_shadowed PASSED                        [  4%]
+tests/test_base.py::test_property_list_of_types PASSED                   [  5%]
+tests/test_base.py::test_verb_shadows_property PASSED                    [  5%]
+tests/test_base.py::test_register_verb_raises_on_non_identifier PASSED   [  6%]
+tests/test_base.py::test_verb_returning_non_df PASSED                    [  7%]
+tests/test_base.py::test_no_context_manager_non_df_returning_verbs PASSED [  7%]
+tests/test_base.py::test_no_attribute_no_verb_raises_attribute_error PASSED [  8%]
+tests/test_base.py::test_no_attribute_no_verb_raises_attribute_error_context_manager PASSED [  9%]
+tests/test_base.py::test_dp_on_empty_stack_raises PASSED                 [  9%]
+tests/test_base.py::test_dp_continuation PASSED                          [ 10%]
+tests/test_base.py::test_context_manager PASSED                          [ 10%]
+tests/test_base.py::test_context_manager_with_non_df_args PASSED         [ 11%]
+tests/test_base.py::test_context_manager_totally_to_pandas PASSED        [ 12%]
+tests/test_base.py::test_interleaved_context_managers FAILED             [ 12%]
+tests/test_base.py::test_context_manager_chain PASSED                    [ 13%]
+tests/test_base.py::test_mixing_context_manager_and_dp PASSED            [ 14%]
+tests/test_base.py::test_dppd_raises_on_non_dataframe PASSED             [ 14%]
+tests/test_base.py::test_straight_dp_raises PASSED                       [ 15%]
+tests/test_base.py::test_forking PASSED                                  [ 16%]
+tests/test_base.py::test_forking_context_manager PASSED                  [ 16%]
+tests/test_base.py::test_dp_on_dp PASSED                                 [ 17%]
+tests/test_base.py::test_descend_on_None_raises PASSED                   [ 18%]
+tests/test_base.py::test_series_methods PASSED                           [ 18%]
+tests/test_base.py::test_group_on_series_raises PASSED                   [ 19%]
+tests/test_pandas_forwards.py::test_iloc PASSED                          [ 20%]
+tests/test_pandas_forwards.py::test_loc PASSED                           [ 20%]
+tests/test_pandas_forwards.py::test_loc_str PASSED                       [ 21%]
+tests/test_pandas_forwards.py::test_loc_returning_series PASSED          [ 21%]
+tests/test_pandas_forwards.py::test_at PASSED                            [ 22%]
+tests/test_pandas_forwards.py::test_iat PASSED                           [ 23%]
+tests/test_pandas_forwards.py::test_sample PASSED                        [ 23%]
+tests/test_pandas_forwards.py::test_index PASSED                         [ 24%]
+tests/test_pandas_forwards.py::test_sort_values PASSED                   [ 25%]
+tests/test_pandas_forwards.py::test_assign PASSED                        [ 25%]
+tests/test_pandas_forwards.py::test_assign_in_order PASSED               [ 26%]
+tests/test_pandas_forwards.py::test_rename PASSED                        [ 27%]
+tests/test_pandas_forwards.py::test_dataframe_subscript PASSED           [ 27%]
+tests/test_reshaping.py::test_basic_gather PASSED                        [ 28%]
+tests/test_reshaping.py::test_gather_iris PASSED                         [ 29%]
+tests/test_reshaping.py::test_basic_spread PASSED                        [ 29%]
+tests/test_reshaping.py::test_spread_raises_on_multiple_keys PASSED      [ 30%]
+tests/test_reshaping.py::test_spread_raises_on_multiple_values PASSED    [ 30%]
+tests/test_reshaping.py::test_spread_raises_on_duplicate_values PASSED   [ 31%]
+tests/test_reshaping.py::test_seperate PASSED                            [ 32%]
+tests/test_reshaping.py::test_seperate_and_remove PASSED                 [ 32%]
+tests/test_reshaping.py::test_seperate_raises_on_Multip_column PASSED    [ 33%]
+tests/test_reshaping.py::test_unite PASSED                               [ 34%]
+tests/test_reshaping.py::test_print FAILED                               [ 34%]
+tests/test_select.py::test_select PASSED                                 [ 35%]
+tests/test_select.py::test_unselect PASSED                               [ 36%]
+tests/test_select.py::test_select_list PASSED                            [ 36%]
+tests/test_select.py::test_unselect_list PASSED                          [ 37%]
+tests/test_select.py::test_select_X_Columns PASSED                       [ 38%]
+tests/test_select.py::test_unselect_X_Columns PASSED                     [ 38%]
+tests/test_select.py::test_select_mix_multiple PASSED                    [ 39%]
+tests/test_select.py::test_unselect_mix_multiple PASSED                  [ 40%]
+tests/test_select.py::test_select_columns_list_comprehension PASSED      [ 40%]
+tests/test_select.py::test_select_columns_str_operation PASSED           [ 41%]
+tests/test_select.py::test_unselect_columns_list_comprehension PASSED    [ 41%]
+tests/test_select.py::test_unselect_columns_str_operation PASSED         [ 42%]
+tests/test_select.py::test_select_renaming PASSED                        [ 43%]
+tests/test_select.py::test_select_by_function PASSED                     [ 43%]
+tests/test_select.py::test_select_regexps PASSED                         [ 44%]
+tests/test_select.py::test_unselect_renaming_raises PASSED               [ 45%]
+tests/test_select.py::test_unselect_by_function PASSED                   [ 45%]
+tests/test_select.py::test_unselect_regexps PASSED                       [ 46%]
+tests/test_select.py::test_unselect_dict_raises PASSED                   [ 47%]
+tests/test_select.py::test_select_invalid_column_spec PASSED             [ 47%]
+tests/test_select.py::test_select_inverse PASSED                         [ 48%]
+tests/test_select.py::test_select_inverse_with_minus_column PASSED       [ 49%]
+tests/test_select.py::test_select_inverse_with_minus_column_and_normal_column PASSED [ 49%]
+tests/test_select.py::test_select_inverse_list PASSED                    [ 50%]
+tests/test_select.py::test_select_inverse_list_mix_raises PASSED         [ 50%]
+tests/test_select.py::test_unselect_inverse PASSED                       [ 51%]
+tests/test_select.py::test_unselect_inverse_with_minus_column PASSED     [ 52%]
+tests/test_select.py::test_unselect_inverse_list PASSED                  [ 52%]
+tests/test_select.py::test_unselect_inverse_list_mix_raises PASSED       [ 53%]
+tests/test_select.py::test_select_empty_list PASSED                      [ 54%]
+tests/test_select.py::test_unselect_empty_list PASSED                    [ 54%]
+tests/test_select.py::test_parse_column_spec_return_list_from_bool PASSED [ 55%]
+tests/test_select.py::test_parse_column_spec_return_list_from_empty_list PASSED [ 56%]
+tests/test_select.py::test_parse_column_spec_return_list_from_function PASSED [ 56%]
+tests/test_select.py::test_parse_column_spec_return_list_from_regexps PASSED [ 57%]
+tests/test_select.py::test_select_index PASSED                           [ 58%]
+tests/test_select.py::test_select_dtypes PASSED                          [ 58%]
+tests/test_single_verbs.py::test_head PASSED                             [ 59%]
+tests/test_single_verbs.py::test_2_stage_concat PASSED                   [ 60%]
+tests/test_single_verbs.py::test_list_concat PASSED                      [ 60%]
+tests/test_single_verbs.py::test_arrange PASSED                          [ 61%]
+tests/test_single_verbs.py::test_arrange_column_spec PASSED              [ 61%]
+tests/test_single_verbs.py::test_arrange_column_spec_empty PASSED        [ 62%]
+tests/test_single_verbs.py::test_arrange_column_spec_inverse PASSED      [ 63%]
+tests/test_single_verbs.py::test_arrange_kind_allowed PASSED             [ 63%]
+tests/test_single_verbs.py::test_arrange_column_spec_inverse2 PASSED     [ 64%]
+tests/test_single_verbs.py::test_mutate PASSED                           [ 65%]
+tests/test_single_verbs.py::test_transmutate PASSED                      [ 65%]
+tests/test_single_verbs.py::test_distinct_dataFrame PASSED               [ 66%]
+tests/test_single_verbs.py::test_distinct_series PASSED                  [ 67%]
+tests/test_single_verbs.py::test_filter PASSED                           [ 67%]
+tests/test_single_verbs.py::test_filter_combo PASSED                     [ 68%]
+tests/test_single_verbs.py::test_group_by_add_count FAILED               [ 69%]
+tests/test_single_verbs.py::test_group_by_head FAILED                    [ 69%]
+tests/test_single_verbs.py::test_group_by_ungroup_head FAILED            [ 70%]
+tests/test_single_verbs.py::test_ungroup_on_non_grouped_raises PASSED    [ 70%]
+tests/test_single_verbs.py::test_group_by_summarise FAILED               [ 71%]
+tests/test_single_verbs.py::test_sorting_within_groups FAILED            [ 72%]
+tests/test_single_verbs.py::test_sorting_within_groups_head FAILED       [ 72%]
+tests/test_single_verbs.py::test_sorting_within_groups_head_ungroup FAILED [ 73%]
+tests/test_single_verbs.py::test_select_in_grouping_keeps_groups FAILED  [ 74%]
+tests/test_single_verbs.py::test_iter_groups FAILED                      [ 74%]
+tests/test_single_verbs.py::test_grouped_mutate_returns_scalar FAILED    [ 75%]
+tests/test_single_verbs.py::test_grouped_mutate_returns_scalar_str FAILED [ 76%]
+tests/test_single_verbs.py::test_grouped_mutate_returns_series FAILED    [ 76%]
+tests/test_single_verbs.py::test_grouped_mutate_function FAILED          [ 77%]
+tests/test_single_verbs.py::test_grouped_mutate_in_non_group PASSED      [ 78%]
+tests/test_single_verbs.py::test_grouped_mutate_repeated_keys FAILED     [ 78%]
+tests/test_single_verbs.py::test_grouped_reset_index FAILED              [ 79%]
+tests/test_single_verbs.py::test_grouped_mutate_non_sorted FAILED        [ 80%]
+tests/test_single_verbs.py::test_group_by_two_summarize_grouped FAILED   [ 80%]
+tests/test_single_verbs.py::test_group_by_two_mutate_grouped FAILED      [ 81%]
+tests/test_single_verbs.py::test_select_does_not_remove_group_columns FAILED [ 81%]
+tests/test_single_verbs.py::test_unselected_group_columns_is_ignored FAILED [ 82%]
+tests/test_single_verbs.py::test_dropping_group_columns_is_ignored FAILED [ 83%]
+tests/test_single_verbs.py::test_accessor_drops_grouping FAILED          [ 83%]
+tests/test_single_verbs.py::test_groupby_sort_changes_order_but_not_result FAILED [ 84%]
+tests/test_single_verbs.py::test_groupby_sort_changes_order_but_not_result2 FAILED [ 85%]
+tests/test_single_verbs.py::test_grouped_mutate_missing_keys FAILED      [ 85%]
+tests/test_single_verbs.py::test_grouped_2_mutate_missing_keys FAILED    [ 86%]
+tests/test_single_verbs.py::test_basic_summary FAILED                    [ 87%]
+tests/test_single_verbs.py::test_summary_quantiles FAILED                [ 87%]
+tests/test_single_verbs.py::test_summary_repeated_target_names PASSED    [ 88%]
+tests/test_single_verbs.py::test_empty_summarize_raises FAILED           [ 89%]
+tests/test_single_verbs.py::test_summarise_non_tuple FAILED              [ 89%]
+tests/test_single_verbs.py::test_summarize_auto_name FAILED              [ 90%]
+tests/test_single_verbs.py::test_do FAILED                               [ 90%]
+tests/test_single_verbs.py::test_do_categorical_grouping FAILED          [ 91%]
+tests/test_single_verbs.py::test_do_without_group PASSED                 [ 92%]
+tests/test_single_verbs.py::test_do_group2 FAILED                        [ 92%]
+tests/test_single_verbs.py::test_filter_by_callable PASSED               [ 93%]
+tests/test_single_verbs.py::test_filter_by_converted_column PASSED       [ 94%]
+tests/test_single_verbs.py::test_filter_by_bool_column PASSED            [ 94%]
+tests/test_single_verbs.py::test_filter_by_column_raises_on_non_column PASSED [ 95%]
+tests/test_single_verbs.py::test_filter_by_callable_grouped FAILED       [ 96%]
+tests/test_single_verbs.py::test_grouped_filter_by_returns_series FAILED [ 96%]
+tests/test_single_verbs.py::test_filter_by_unkown_raises PASSED          [ 97%]
+tests/test_single_verbs.py::test_mutate_series PASSED                    [ 98%]
+tests/test_single_verbs.py::test_groupby_select PASSED                   [ 98%]
+tests/test_single_verbs.py::test_groupby_within_chain PASSED             [ 99%]
+tests/test_single_verbs.py::test_groupby_within_chain_select_on_group PASSED [100%]
+
+=================================== FAILURES ===================================
+______________________ test_interleaved_context_managers _______________________
+
+    def test_interleaved_context_managers():
+        with dppd(mtcars) as (dpX, X):
+            with dppd(diamonds) as (dpY, Y):
+                dpX.group_by("cyl")
+                dpY.filter_by(Y.cut == "Ideal")
+                dpX.summarize(("hp", np.mean, "mean_hp"))
+                dpY.summarize(("price", np.max, "max_price"))
+        should_X = (
+            mtcars.groupby("cyl")[["hp"]].agg(np.mean).rename(columns={"hp": "mean_hp"})
+        ).reset_index()
+        should_Y = (
+            pd.DataFrame(diamonds[diamonds.cut == "Ideal"].max()[["price"]])
+            .transpose()
+            .rename(columns={"price": "max_price"})
+        )
+        should_Y["max_price"] = should_Y["max_price"].astype(int)
+>       assert_frame_equal(X, should_X)
+
+tests/test_base.py:226: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/util/testing.py:1321: in assert_frame_equal
+    '{shape!r}'.format(shape=right.shape))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+obj = 'DataFrame', message = 'DataFrame shape mismatch', left = '(1, 1)'
+right = '(3, 2)', diff = None
+
+    def raise_assert_detail(obj, message, left, right, diff=None):
+        if isinstance(left, np.ndarray):
+            left = pprint_thing(left)
+        elif is_categorical_dtype(left):
+            left = repr(left)
+    
+        if PY2 and isinstance(left, string_types):
+            # left needs to be printable in native text type in python2
+            left = left.encode('utf-8')
+    
+        if isinstance(right, np.ndarray):
+            right = pprint_thing(right)
+        elif is_categorical_dtype(right):
+            right = repr(right)
+    
+        if PY2 and isinstance(right, string_types):
+            # right needs to be printable in native text type in python2
+            right = right.encode('utf-8')
+    
+        msg = """{obj} are different
+    
+    {message}
+    [left]:  {left}
+    [right]: {right}""".format(obj=obj, message=message, left=left, right=right)
+    
+        if diff is not None:
+            msg += "\n[diff]: {diff}".format(diff=diff)
+    
+>       raise AssertionError(msg)
+E       AssertionError: DataFrame are different
+E       
+E       DataFrame shape mismatch
+E       [left]:  (1, 1)
+E       [right]: (3, 2)
+
+../dev/lib/python3.6/site-packages/pandas/util/testing.py:1035: AssertionError
+__________________________________ test_print __________________________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x7f7ddc22d860>
+
+    def test_print(capsys):
+        dp(mtcars).print()
+        captured = capsys.readouterr()
+        assert "Mazda RX4" in captured.out
+>       dp(mtcars).group_by("cyl").print()
+
+tests/test_reshaping.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbfcd5f8>
+attr = 'print'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'print'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+___________________________ test_group_by_add_count ____________________________
+
+    def test_group_by_add_count():
+        df = pd.DataFrame({"x": [1, 5, 2, 2, 4, 0, 4], "y": [1, 2, 3, 4, 5, 6, 5]})
+>       actual = dp(df).group_by("x").add_count().pd
+
+tests/test_single_verbs.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc248160>
+attr = 'add_count'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'add_count'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+______________________________ test_group_by_head ______________________________
+
+    def test_group_by_head():
+>       actual = dp(mtcars).group_by("cyl").head(1).select("name").pd
+
+tests/test_single_verbs.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/generic.py:3052: in select
+    np.asarray([bool(crit(label)) for label in axis_values])]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7f7ddc2b6dd8>
+
+>   np.asarray([bool(crit(label)) for label in axis_values])]
+E   TypeError: 'str' object is not callable
+
+../dev/lib/python3.6/site-packages/pandas/core/generic.py:3052: TypeError
+__________________________ test_group_by_ungroup_head __________________________
+
+    def test_group_by_ungroup_head():
+>       actual = dp(mtcars).group_by("cyl").identity().ungroup().head(1).pd
+
+tests/test_single_verbs.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc31dc88>
+attr = 'identity'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'identity'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+___________________________ test_group_by_summarise ____________________________
+
+    def test_group_by_summarise():
+>       actual = dp(mtcars).group_by("cyl").summarise(("name", len, "count")).pd
+
+tests/test_single_verbs.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7df44a76a0>
+attr = 'summarise'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'summarise'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+__________________________ test_sorting_within_groups __________________________
+
+    def test_sorting_within_groups():
+>       actual = dp(mtcars).group_by(X.cyl).sort_values("qsec").pd
+
+tests/test_single_verbs.py:191: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc2b6dd8>
+name = 'sort_values'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'sort_values' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+_______________________ test_sorting_within_groups_head ________________________
+
+    def test_sorting_within_groups_head():
+>       actual = dp(mtcars).group_by(X.cyl).sort_values("qsec").tail(1).pd
+
+tests/test_single_verbs.py:198: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc31dc88>
+name = 'sort_values'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'sort_values' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+___________________ test_sorting_within_groups_head_ungroup ____________________
+
+    def test_sorting_within_groups_head_ungroup():
+>       actual = dp(mtcars).group_by(X.cyl).sort_values("qsec").ungroup().tail(1).pd
+
+tests/test_single_verbs.py:208: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc33fc88>
+name = 'sort_values'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'sort_values' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+_____________________ test_select_in_grouping_keeps_groups _____________________
+
+    def test_select_in_grouping_keeps_groups():
+>       actual = dp(mtcars).group_by("cyl").select("qsec").pd
+
+tests/test_single_verbs.py:216: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc26d780>
+name = 'select'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'select' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+_______________________________ test_iter_groups _______________________________
+
+    def test_iter_groups():
+        g = []
+        ls = []
+>       for grp, sub_df in dp(mtcars).group_by("cyl").itergroups():
+
+tests/test_single_verbs.py:223: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc31dc88>
+attr = 'itergroups'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'itergroups'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+______________________ test_grouped_mutate_returns_scalar ______________________
+
+    def test_grouped_mutate_returns_scalar():
+        actual = (
+            dp(mtcars)
+>           .group_by("cyl")
+            .mutate(count={grp: len(sub_df) for (grp, sub_df) in X.itergroups()})
+            .select("count")
+            .pd.sort_index()
+        )
+
+tests/test_single_verbs.py:233: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc248438>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+____________________ test_grouped_mutate_returns_scalar_str ____________________
+
+    def test_grouped_mutate_returns_scalar_str():
+        actual = (
+            dp(mtcars)
+>           .group_by("cyl")
+            .mutate(count={grp: "X" + str(len(sub_df)) for (grp, sub_df) in X.itergroups()})
+            .select("count")
+            .pd.sort_index()
+        )
+
+tests/test_single_verbs.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbf07be0>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+______________________ test_grouped_mutate_returns_series ______________________
+
+    def test_grouped_mutate_returns_series():
+        actual = (
+            dp(mtcars)
+>           .group_by("cyl")
+            .mutate(grp_rank={grp: sub_df.hp.rank() for (grp, sub_df) in X.itergroups()})
+            .select("grp_rank")
+            .pd.sort_index()
+        )
+
+tests/test_single_verbs.py:265: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc265eb8>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+_________________________ test_grouped_mutate_function _________________________
+
+    def test_grouped_mutate_function():
+        actual = (
+            dp(mtcars)
+>           .group_by("cyl")
+            .mutate(max_hp=lambda x: x["hp"].max())
+            .select(["cyl", "max_hp", "name"])
+            .pd
+        )
+
+tests/test_single_verbs.py:282: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc265c50>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+______________________ test_grouped_mutate_repeated_keys _______________________
+
+    def test_grouped_mutate_repeated_keys():
+        df = mtcars.copy()
+        df.index = list(range(16)) + list(range(16))
+        should = df.assign(grp_rank=df.groupby("cyl")["hp"].rank())[
+            ["cyl", "name", "grp_rank"]
+        ].sort_values("name")
+        with dppd(df) as (ddf, X):
+            actual = (
+>               ddf.group_by("cyl")
+                .mutate(
+                    grp_rank={grp: sub_df.hp.rank() for (grp, sub_df) in X.itergroups()}
+                )
+                .select(["name", "grp_rank"])
+                .sort_index()
+            )
+
+tests/test_single_verbs.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbd4e240>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+___________________________ test_grouped_reset_index ___________________________
+
+    def test_grouped_reset_index():
+>       actual = dp(mtcars).group_by("cyl").reset_index().pd
+
+tests/test_single_verbs.py:345: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbf074e0>
+name = 'reset_index'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'reset_index' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+________________________ test_grouped_mutate_non_sorted ________________________
+
+    def test_grouped_mutate_non_sorted():
+        actual = (
+            dp(mtcars)
+>           .group_by("cyl")
+            .mutate(grp_rank={grp: sub_df.hp.rank() for (grp, sub_df) in X.itergroups()})
+            .select("grp_rank")
+            .pd.sort_index()
+        )
+
+tests/test_single_verbs.py:356: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc265b00>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+_____________________ test_group_by_two_summarize_grouped ______________________
+
+    def test_group_by_two_summarize_grouped():
+>       actual = dp(diamonds).group_by("color", "cut").summarise(("price", len, "count")).pd
+
+tests/test_single_verbs.py:371: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc265eb8>
+attr = 'summarise'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'summarise'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+_______________________ test_group_by_two_mutate_grouped _______________________
+
+    def test_group_by_two_mutate_grouped():
+        actual = (
+            dp(mtcars)
+>           .group_by("cyl", "vs")
+            .mutate(grp_rank={grp: sub_df.hp.rank() for (grp, sub_df) in X.itergroups()})
+            .select("grp_rank")
+            .pd.sort_index()
+        )
+
+tests/test_single_verbs.py:381: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc248fd0>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+__________________ test_select_does_not_remove_group_columns ___________________
+
+    def test_select_does_not_remove_group_columns():
+>       actual = dp(mtcars).group_by("cyl").select("name").pd
+
+tests/test_single_verbs.py:396: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc248cc0>
+name = 'select'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'select' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+___________________ test_unselected_group_columns_is_ignored ___________________
+
+    def test_unselected_group_columns_is_ignored():
+>       actual = dp(mtcars).group_by("cyl").unselect("cyl").pd
+
+tests/test_single_verbs.py:401: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbf07ef0>
+attr = 'unselect'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'unselect'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+____________________ test_dropping_group_columns_is_ignored ____________________
+
+    def test_dropping_group_columns_is_ignored():
+>       actual = dp(mtcars).group_by("cyl").drop("cyl", axis=1).pd
+
+tests/test_single_verbs.py:406: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc255ba8>
+name = 'drop'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'drop' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+_________________________ test_accessor_drops_grouping _________________________
+
+    def test_accessor_drops_grouping():
+>       actual = dp(mtcars).group_by("cyl").loc[:, ["name"]]
+
+tests/test_single_verbs.py:411: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbd9e390>
+name = 'loc'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'loc' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+________________ test_groupby_sort_changes_order_but_not_result ________________
+
+    def test_groupby_sort_changes_order_but_not_result():
+        a = (
+            dp(mtcars)
+>           .group_by("cyl")
+            .sort_values("hp")
+            .mutate(count={grp: len(sub_df) for (grp, sub_df) in X.itergroups()})
+            .pd
+        )
+
+tests/test_single_verbs.py:421: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc20a278>
+name = 'sort_values'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'sort_values' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+_______________ test_groupby_sort_changes_order_but_not_result2 ________________
+
+    def test_groupby_sort_changes_order_but_not_result2():
+        a = (
+            dp(mtcars)
+>           .group_by("cyl")
+            .sort_values("hp")
+            .mutate(count={grp: sub_df.hp.rank() for (grp, sub_df) in X.itergroups()})
+            .pd
+        )
+
+tests/test_single_verbs.py:438: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddba19358>
+name = 'sort_values'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'sort_values' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+_______________________ test_grouped_mutate_missing_keys _______________________
+
+    def test_grouped_mutate_missing_keys():
+>       actual = dp(mtcars).group_by("cyl").mutate(count={4: 170, 6: 180, 8: 190}).pd
+
+tests/test_single_verbs.py:453: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc248f28>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+______________________ test_grouped_2_mutate_missing_keys ______________________
+
+    def test_grouped_2_mutate_missing_keys():
+        counts = {(4, 0): 40, (4, 1): 41, (6, 0): 60, (6, 1): 61, (8, 0): 80, (8, 1): 81}
+>       actual = dp(mtcars).group_by("cyl", "vs").mutate(count=counts).pd
+
+tests/test_single_verbs.py:462: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc248fd0>
+attr = 'mutate'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'mutate'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+______________________________ test_basic_summary ______________________________
+
+    def test_basic_summary():
+>       actual = dp(mtcars).group_by("cyl").summarize((X.hp, len, "count")).pd
+
+tests/test_single_verbs.py:476: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbd31630>
+attr = 'summarize'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'summarize'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+____________________________ test_summary_quantiles ____________________________
+
+    def test_summary_quantiles():
+        args = [
+            ("disp", lambda x, q=q: x.quantile(q), "q%.2f" % q)
+            for q in np.arange(0, 1.1, 0.1)
+        ]
+>       actual = dp(mtcars).sort_values("cyl").group_by("cyl").summarise(*args).pd
+
+tests/test_single_verbs.py:488: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbd4eef0>
+attr = 'summarise'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'summarise'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+_________________________ test_empty_summarize_raises __________________________
+
+    def test_empty_summarize_raises():
+        with pytest.raises(ValueError):
+>           dp(mtcars).group_by("cyl").summarize()
+
+tests/test_single_verbs.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc20aac8>
+attr = 'summarize'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'summarize'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+___________________________ test_summarise_non_tuple ___________________________
+
+    def test_summarise_non_tuple():
+        with pytest.raises(ValueError):
+>           dp(mtcars).group_by("cyl").summarize(np.min)
+
+tests/test_single_verbs.py:515: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbd4ebe0>
+attr = 'summarize'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'summarize'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+___________________________ test_summarize_auto_name ___________________________
+
+    def test_summarize_auto_name():
+>       actual = dp(mtcars).group_by("cyl").summarize(("hp", np.min))
+
+tests/test_single_verbs.py:519: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddba211d0>
+attr = 'summarize'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'summarize'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+___________________________________ test_do ____________________________________
+
+    def test_do():
+        def count_and_count_unique(df):
+            return pd.DataFrame({"count": [len(df)], "unique": [(~df.duplicated()).sum()]})
+    
+>       actual = dp(mtcars).group_by("cyl").select("hp").do(count_and_count_unique).pd
+
+tests/test_single_verbs.py:527: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc20a588>
+name = 'select'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'select' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+_________________________ test_do_categorical_grouping _________________________
+
+    def test_do_categorical_grouping():
+        def count_and_count_unique(df):
+            return pd.DataFrame({"count": [len(df)], "unique": [(~df.duplicated()).sum()]})
+    
+        actual = (
+            dp(mtcars)
+            .mutate(cyl=pd.Categorical(X.cyl))
+>           .group_by("cyl")
+            .select("hp")
+            .do(count_and_count_unique)
+            .pd
+        )
+
+tests/test_single_verbs.py:541: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbd3c2e8>
+name = 'select'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'select' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+________________________________ test_do_group2 ________________________________
+
+    def test_do_group2():
+        def count_and_count_unique(df):
+            return pd.DataFrame({"count": [len(df)], "unique": [(~df.duplicated()).sum()]})
+    
+>       actual = dp(mtcars).group_by("cyl", "am").select("hp").do(count_and_count_unique).pd
+
+tests/test_single_verbs.py:565: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:762: in __getattr__
+    return self._make_wrapper(attr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddbd9e080>
+name = 'select'
+
+    def _make_wrapper(self, name):
+        if name not in self._apply_whitelist:
+            is_callable = callable(getattr(self._selected_obj, name, None))
+            kind = ' callable ' if is_callable else ' '
+            msg = ("Cannot access{0}attribute {1!r} of {2!r} objects, try "
+                   "using the 'apply' method".format(kind, name,
+                                                     type(self).__name__))
+>           raise AttributeError(msg)
+E           AttributeError: Cannot access callable attribute 'select' of 'DataFrameGroupBy' objects, try using the 'apply' method
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:799: AttributeError
+_______________________ test_filter_by_callable_grouped ________________________
+
+    def test_filter_by_callable_grouped():
+>       actual = dp(mtcars).group_by("cyl").filter_by(lambda x: x.hp.rank() <= 2).pd
+
+tests/test_single_verbs.py:607: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddba193c8>
+attr = 'filter_by'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'filter_by'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+____________________ test_grouped_filter_by_returns_series _____________________
+
+    def test_grouped_filter_by_returns_series():
+        actual = (
+            dp(mtcars)
+>           .group_by("cyl")
+            .filter_by(
+                {
+                    grp: sub_df.hp.rank(ascending=False) <= 2
+                    for (grp, sub_df) in X.itergroups()
+                }
+            )
+            .pd.sort_index()
+        )
+
+tests/test_single_verbs.py:618: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x7f7ddc20add8>
+attr = 'filter_by'
+
+    def __getattr__(self, attr):
+        if attr in self._internal_names_set:
+            return object.__getattribute__(self, attr)
+        if attr in self.obj:
+            return self[attr]
+        if hasattr(self.obj, attr):
+            return self._make_wrapper(attr)
+    
+        raise AttributeError("%r object has no attribute %r" %
+>                            (type(self).__name__, attr))
+E       AttributeError: 'DataFrameGroupBy' object has no attribute 'filter_by'
+
+../dev/lib/python3.6/site-packages/pandas/core/groupby/groupby.py:765: AttributeError
+
+----------- coverage: platform linux, python 3.6.6-final-0 -----------
+Name                       Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------------
+src/dppd/__init__.py          10      0      0      0   100%
+src/dppd/base.py             178     20     86      3    85%   94-127, 257, 265, 276-277, 89->94, 263->265, 273->276
+src/dppd/single_verbs.py     279     40    186     14    82%   283, 287-293, 308, 314, 367-374, 376, 397, 403, 411, 424-426, 430-434, 440-444, 483, 489-491, 496-500, 515, 668, 195->197, 280->283, 286->287, 375->376, 396->397, 402->403, 410->411, 421->424, 429->430, 438->440, 480->483, 488->489, 494->496, 667->668
+----------------------------------------------------------------------
+TOTAL                        467     60    272     17    84%
+
+=============================== warnings summary ===============================
+tests/test_single_verbs.py::test_group_by_head
+  /home/finkernagel/upstream/dppd/tests/test_single_verbs.py:156: FutureWarning: 'select' is deprecated and will be removed in a future release. You can use .loc[labels.map(crit)] as a replacement
+    actual = dp(mtcars).group_by("cyl").head(1).select("name").pd
+
+-- Docs: https://docs.pytest.org/en/latest/warnings.html
+============== 38 failed, 117 passed, 1 warnings in 6.15 seconds ===============

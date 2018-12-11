@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-    Dummy conftest.py for mbf_dply.
+    Dummy conftest.py for dppd.
 
     If you don't know what this is for, just leave it empty.
     Read more about conftest.py under:
@@ -9,3 +9,5 @@
 """
 
 # import pytest
+import sys
+sys.path.append('src')
