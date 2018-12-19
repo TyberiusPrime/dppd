@@ -404,7 +404,7 @@ def test_grouped_mutate_repeated_keys():
         with dppd(df) as (ddf, X):
             ddf.groupby("cyl").mutate(
                 grp_rank={grp: sub_df.hp.rank() for (grp, sub_df) in X.itergroups()}
-            ) 
+            )
 
 
 def test_grouped_mutate_non_sorted():

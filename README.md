@@ -2,19 +2,18 @@
 dppd
 ========
 
-================ ===========================================================================
+| ------------- | --------------------------------------------------------------------------|
 Build status:    ![build status](https://travis-ci.com/TyberiusPrime/dppd.svg?branch=master)
+| ------------- | --------------------------------------------------------------------------|
 Documentation:   https://dppd.readthedocs.io/en/
-================ ===========================================================================
 
 Dppd is a python [dplyr](dplyr.tidyverse.org) clone.
 
 
-.. higlight:: python
+It allows you to use code like this
 
 
-It allows you to use code like this::
-
+```python
    >>> from plotnine.data import mtcars
    >>> from dppd import dppd
    >>> dp, X = dppd()
@@ -24,6 +23,7 @@ It allows you to use code like this::
    18    4       Honda Civic  30.4   75.7   52  4.93  1.615  18.52   1   1     4     2   38.48
    21    8  Dodge Challenger  15.5  318.0  150  2.76  3.520  16.87   0   0     3     2  111.00
    22    8       AMC Javelin  15.2  304.0  150  3.15  3.435  17.30   0   0     3     2  111.00
+```
 
 
 Briefly, it uses a data-manipulater instance (dp above) together with a proxied 
