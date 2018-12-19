@@ -38,7 +38,7 @@ output_dir = os.path.join(__location__, "api")
 module_dir = os.path.join(__location__, "../src/dppd")
 try:
     shutil.rmtree(output_dir)
-except IOError:
+except (IOError, OSError):
     pass
 
 try:
