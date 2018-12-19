@@ -40,6 +40,8 @@ install:
       pip install -e .[testing]
     elif [[ "$JOB" == "LINT" ]]; then
       pip install flake8
+    elif [[ "$JOB" == "DOCS" ]]; then
+    pip install sphinx sphinx-bootstrap-theme
     fi
   - pip list
 

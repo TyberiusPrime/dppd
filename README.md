@@ -1,11 +1,10 @@
-========
-dppd
-========
+#dppd
 
 | ------------- | --------------------------------------------------------------------------|
-Build status:    ![build status](https://travis-ci.com/TyberiusPrime/dppd.svg?branch=master)
+Build status:   | ![build status](https://travis-ci.com/TyberiusPrime/dppd.svg?branch=master)
 | ------------- | --------------------------------------------------------------------------|
-Documentation:   https://dppd.readthedocs.io/en/
+Documentation:  | https://dppd.readthedocs.io/en/
+| ------------- | --------------------------------------------------------------------------|
 
 Dppd is a python [dplyr](dplyr.tidyverse.org) clone.
 
