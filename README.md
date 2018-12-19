@@ -2,7 +2,7 @@
 
 | Build status: | ![build status](https://travis-ci.com/TyberiusPrime/dppd.svg?branch=master) |
 |---------------|-----------------------------------------------------------------------------|
-| Documentation | https://dppd.readthedocs.io/en/                                             |
+| Documentation | https://dppd.readthedocs.io/en/latest/
 
 Dppd is a python [dplyr](dplyr.tidyverse.org) clone.
 
@@ -28,7 +28,7 @@ reference to the latest created DataFrame (the X above) to achive for pandas wha
 non-standard-evaluation based verbs does for R.
 
 
-Please see our full documentation at https://dppd.readthedocs.io/en/
+Please see our full documentation at https://dppd.readthedocs.io/en/latest/
 for more details and a list of the supported verbs.
 
 
