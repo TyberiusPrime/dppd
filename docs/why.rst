@@ -92,8 +92,15 @@ Dppd supports a mini language for column specifications - see
 	    name  cyl  hp
   18  Honda Civic    4  52
   7     Merc 240D    4  62
-  
-  
+
+
+
+Single dispatch 'clean monkey patching' engine
+------------------------------------------------
+
+
+Dppd internally is in essence a clean monkey-patching single dispatch engine that 
+allows you to wrap types beyond the DataFrame.e
 
 
 
