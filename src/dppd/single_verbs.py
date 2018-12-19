@@ -283,8 +283,8 @@ def mutate_DataFrameGroupBy(grp, **kwargs):
         **kwargs : scalar, pd.Series, callable, dict
                 * scalar, pd.Series -> assign column
                 * callable - call callable once per group (sub_df) and assign result
-                * dict {grp_key: scalar_or_series}: assign this (these) value(s) for the group.
-                Use in conjunction with `dppd.Dppd.itergroups`.
+                * dict {grp_key: scalar_or_series}: assign this (these) value(s) for the group.  Use in conjunction with `dppd.Dppd.itergroups`.
+
     """
     df = grp._selected_obj
     grp_params = group_extract_params(grp)

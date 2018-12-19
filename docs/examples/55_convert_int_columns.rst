@@ -7,6 +7,7 @@ pandas::
 
 
 plydata::
+
   mtcars >> dp.mutate(*[(x[0], list(x[1])) for x in mtcars.select_dtypes(int).astype(float).items()])
 
 The conversion to a list is necessary (bug?)

@@ -17,6 +17,7 @@ Contents
    Grouping <grouping>
 
    Comparison with others / Rosetta stone <comparisons>
+   Extending dppd <extending>
 
    License <license>
    Authors <authors>
