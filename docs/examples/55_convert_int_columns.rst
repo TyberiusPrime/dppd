@@ -18,9 +18,11 @@ dplython::
 
 
 dfply::
+
   mtcars >> dp.mutate(**{x[0]: x[1] for x in mtcars.select_dtypes(int).astype(float).items()})
 
 
 dppd::
+
   dp(mtcars).mutate(**{x[0]: x[1] for x in mtcars.select_dtypes(int).astype(float).items()}).pd
 

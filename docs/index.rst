@@ -16,6 +16,7 @@ Contents
    Verbs <verbs>
    Grouping <grouping>
 
+   Why do we need dppd <why>
    Comparison with others / Rosetta stone <comparisons>
    Extending dppd <extending>
 

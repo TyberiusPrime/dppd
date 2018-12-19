@@ -84,7 +84,7 @@ def parse_column_specification(df_columns, column_spec, return_list=False):
             * str, [str] - select columns by name, (always returns an DataFrame, never a Series)
             * pd.Series / np.ndarray, dtype == bool: select columns matching this bool vector, example: ``select(X.name.str.startswith('c'))``
             * pd.Series, [pd.Series] - select columns by series.name
-            * "-column_name" or ["-column_name1","-column_name2"]: drop all other columns
+            * "-column_name" or ["-column_name1","-column_name2"]: drop all other columns (or invert search order in arrange)
             * pd.Index - interpreted as a list of column names - example: select(X.select_dtypes(int).columns)
             * (regexps_str, ) tuple - run re.search() on each column name
             * a callable f, which takes a string column name and returns a bool whether to include the column.

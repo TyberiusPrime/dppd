@@ -35,6 +35,7 @@ pandas version 2::
 Using named functions - not quick, but cleaner
 
 plydata::
+
   (mtcars 
   >> dp.arrange('cyl') 
   >> dp.group_by("cyl") 

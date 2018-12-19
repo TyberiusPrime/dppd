@@ -2,9 +2,6 @@ Groups and summaries
 =========================
 
 
--------
-
-
 Dppd's grouping is based on :meth:`pandas.DataFrame.groupby`,
 which is supported in the fluent api::	
 

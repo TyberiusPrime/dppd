@@ -67,8 +67,9 @@ Style 2: dp.....pd
   >>> print(type(mt2))
   <class 'pandas.core.frame.DataFrame'>
 
-The inline-style is more casual, but requires the final call ".pd" 
-to retrieve the DataFrame object, otherwise you have a :py:mod:`dppd.Dppd`_
+
+The inline-style is more casual, but requires the final call .pd
+to retrieve the DataFrame object, otherwise you have a :class:`dppd.Dppd`.
 
 
 
