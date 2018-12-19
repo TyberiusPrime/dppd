@@ -10,10 +10,10 @@ except DistributionNotFound:  # pragma: no cover
 finally:
     del get_distribution, DistributionNotFound
 
-from .base import dppd, register_verb, alias_verb, register_type_methods_as_verbs
+from .base import dppd, register_verb, register_type_methods_as_verbs
 from . import single_verbs  # noqa:F401
 
 
 all = [
-    dppd, register_verb, alias_verb, register_type_methods_as_verbs
+    dppd, register_verb, register_type_methods_as_verbs
 ]

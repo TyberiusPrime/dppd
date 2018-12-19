@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from dppd import dppd, register_verb, alias_verb
+from dppd import dppd, register_verb
 from dppd.base import register_property
 import pandas as pd
 import numpy as np
@@ -73,29 +73,6 @@ def test_redefining_verb_vars():
         register_verb("test_redefining_verb_vars_noop")(noop)
 
 
-def test_alias_unknown_raises():
-    with pytest.raises(KeyError):
-        alias_verb("test_alias_unknown_raises2", "test_alias_unknown_raises")
-
-
-def test_redefining_alias_warns():
-    def noop(df):
-        return df
-
-    register_verb("test_redefining_alias_warns")(noop)
-    register_verb("test_redefining_alias_warns3")(noop)
-    with pytest.warns(None) as record:
-        alias_verb("test_redefining_alias_warns2", "test_redefining_alias_warns")
-        assert len(record) == 0
-    # redefining to the same is harmless
-    with pytest.warns(None) as record:
-        alias_verb("test_redefining_alias_warns2", "test_redefining_alias_warns")
-        assert len(record) == 0
-
-    with pytest.warns(UserWarning):
-        alias_verb("test_redefining_alias_warns2", "test_redefining_alias_warns3")
-
-
 def test_property_shadowed():
     with pytest.warns(UserWarning):
         register_property("select", pd.DataFrame)
@@ -127,6 +104,20 @@ def test_verb_shadows_property():
 def test_register_verb_raises_on_non_identifier():
     with pytest.raises(TypeError):
         register_verb(name="Hello world")(lambda x: x)
+
+
+def test_register_verb_aliases():
+    import dppd.base
+    def shu():
+        pass
+
+    register_verb(["test_register_verb_aliases", "test_register_verb_aliases2"])(shu)
+    assert ("test_register_verb_aliases", None) in dppd.base.verb_registry
+    assert ("test_register_verb_aliases2", None) in dppd.base.verb_registry
+    assert (
+        dppd.base.verb_registry[("test_register_verb_aliases", None)]
+        is dppd.base.verb_registry[("test_register_verb_aliases2", None)]
+    )
 
 
 def test_verb_returning_non_df():
@@ -274,15 +265,17 @@ def test_straight_dp_raises():
     with pytest.raises(ValueError):
         dp.loc[5]
 
+
 def test_stacking():
     dp, X = dppd()
-    a = dp(mtcars).select(['name','hp','cyl'])
-    b = dp(mtcars).select('hp').pd
-    assert_frame_equal(b, mtcars[['hp']])
-    assert_frame_equal(X, mtcars[['name','hp','cyl']])
+    a = dp(mtcars).select(["name", "hp", "cyl"])
+    b = dp(mtcars).select("hp").pd
+    assert_frame_equal(b, mtcars[["hp"]])
+    assert_frame_equal(X, mtcars[["name", "hp", "cyl"]])
     c = dp.pd
-    assert_frame_equal(c, mtcars[['name','hp','cyl']])
-    assert (X == None) # since it's the proxy, is will fail
+    assert_frame_equal(c, mtcars[["name", "hp", "cyl"]])
+    assert X == None  # since it's the proxy, is will fail
+
 
 def test_forking():
     dp, X = dppd()
@@ -293,7 +286,7 @@ def test_forking():
     c = dp(a).select(X.hp).head().pd
     assert_series_equal(c["hp"], mtcars["hp"].head())
     assert_series_equal(b["name"], mtcars["name"].head())
-    assert (X == None) # since it's the proxy, is will fail
+    assert X == None  # since it's the proxy, is will fail
 
 
 def test_forking_context_manager():

@@ -25,9 +25,10 @@ class register_verb:
         """
         Parameters:
         -----------
-            name : str or None
-                Must be a valid identifer.
+            names : str, list or None
                 May be omitted, then it get's set to the functions __name__.
+                If it's a list, register aliases right away
+                Must be a valid identifer.
             types : type or [type, type,...]
                 this verb only applies to these types
             full_replacement : bool
@@ -47,7 +48,7 @@ class register_verb:
                 Mostly an optimization for select, drop etc.
 
     """
-        self.name = name
+        self.names = name
         if not isinstance(types, list):
             types = [types]
         self.types = types
@@ -57,21 +58,13 @@ class register_verb:
                 property_registry[t] = set()
 
     def __call__(self, func):
-        if self.name is None:
-            real_name = func.__name__
+        if self.names is None:
+            real_names = [func.__name__]
         else:
-            real_name = self.name
-        if not real_name.isidentifier():
-            raise TypeError(
-                "name passed to register_verb must be a valid python identifier"
-            )
-        for t in self.types:
-            if (real_name, t) in verb_registry and verb_registry[
-                (real_name, t)
-            ] != func:
-                warnings.warn(f"redefining verb {real_name} for type {t}")
-            if t in property_registry and real_name in property_registry[t]:
-                warnings.warn(f"verb {real_name} shadows property for type {t}")
+            if not isinstance(self.names, list):
+                real_names = [self.names]
+            else:
+                real_names = self.names
 
         def outer(dppd):
             def inner(*args, **kwargs):
@@ -84,27 +77,23 @@ class register_verb:
 
             return inner
 
-        outer.__doc__ == func.__doc__
-        for t in self.types:
-            verb_registry[real_name, t] = outer
+        for real_name in real_names:
+            if not real_name.isidentifier():
+                raise TypeError(
+                    "name passed to register_verb must be a valid python identifier"
+                )
+            for t in self.types:
+                if (real_name, t) in verb_registry and verb_registry[
+                    (real_name, t)
+                ] != func:
+                    warnings.warn(f"redefining verb {real_name} for type {t}")
+                if t in property_registry and real_name in property_registry[t]:
+                    warnings.warn(f"verb {real_name} shadows property for type {t}")
+
+            outer.__doc__ == func.__doc__
+            for t in self.types:
+                verb_registry[real_name, t] = outer
         return func
-
-
-def alias_verb(new_name, old_name):
-    """Alias one verb as another.
-
-    """
-    any_found = False
-    for t in dppd_types:
-        if (old_name, t) in verb_registry:
-            if (new_name, t) in verb_registry and (
-                verb_registry[old_name, t] != verb_registry[new_name, t]
-            ):
-                warnings.warn(f"Redefining {new_name} by alias")
-            verb_registry[new_name, t] = verb_registry[old_name, t]
-            any_found = True
-    if not any_found:
-        raise KeyError(f"Could not alias non existing verb {old_name}")
 
 
 def register_property(name, types=None):
@@ -164,9 +153,12 @@ class Dppd:
     def _descend(self, new_df, parent=None):
         if new_df is None:
             raise ValueError()
-        return Dppd(new_df, self._dppd_proxy, self.X,
-                    parent if parent is not None else self.parent
-                    )
+        return Dppd(
+            new_df,
+            self._dppd_proxy,
+            self.X,
+            parent if parent is not None else self.parent,
+        )
 
     @property
     def pd(self):
