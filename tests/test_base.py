@@ -274,8 +274,18 @@ def test_straight_dp_raises():
     with pytest.raises(ValueError):
         dp.loc[5]
 
+def test_stacking():
+    dp, X = dppd()
+    a = dp(mtcars).select(['name','hp','cyl'])
+    b = dp(mtcars).select('hp').pd
+    assert_frame_equal(b, mtcars[['hp']])
+    assert_frame_equal(X, mtcars[['name','hp','cyl']])
+    c = dp.pd
+    assert_frame_equal(c, mtcars[['name','hp','cyl']])
+    assert (X == None) # since it's the proxy, is will fail
 
 def test_forking():
+    dp, X = dppd()
     a = dp(mtcars).select(["name", "hp", "cyl"])
     b = dp.unselect("hp").select(X.name).head().pd
     with pytest.raises(AttributeError):
@@ -283,7 +293,7 @@ def test_forking():
     c = dp(a).select(X.hp).head().pd
     assert_series_equal(c["hp"], mtcars["hp"].head())
     assert_series_equal(b["name"], mtcars["name"].head())
-    assert_frame_equal(X, mtcars[["hp"]].head())
+    assert (X == None) # since it's the proxy, is will fail
 
 
 def test_forking_context_manager():

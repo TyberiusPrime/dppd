@@ -53,6 +53,8 @@ class register_verb:
         self.types = types
         for t in types:
             dppd_types.add(t)
+            if not t in property_registry:
+                property_registry[t] = set()
 
     def __call__(self, func):
         if self.name is None:
@@ -142,7 +144,7 @@ class Dppd:
 
     """
 
-    def __init__(self, df, dppd_proxy, X):
+    def __init__(self, df, dppd_proxy, X, parent):
         if isinstance(df, wrapt.ObjectProxy):
             df = df._get_wrapped()
         elif isinstance(df, Dppd):
@@ -157,16 +159,22 @@ class Dppd:
         self.X = X  # the StackAwareDataframe proxy
         dppd_proxy._self_update_wrapped(self)
         self.X._self_update_wrapped(self.df)
+        self.parent = parent
 
-    def _descend(self, new_df):
+    def _descend(self, new_df, parent=None):
         if new_df is None:
             raise ValueError()
-        return Dppd(new_df, self._dppd_proxy, self.X)
+        return Dppd(new_df, self._dppd_proxy, self.X,
+                    parent if parent is not None else self.parent
+                    )
 
     @property
     def pd(self):
         """Return the actual, unproxyied DataFrame"""
         result = self.df
+        if self.parent is not None:
+            self._dppd_proxy._self_update_wrapped(self.parent)
+            self.X._self_update_wrapped(self.parent.df)
         return result
 
     def __call__(self, df=None):
@@ -175,7 +183,8 @@ class Dppd:
                 raise ValueError("You have to call dp(df) before calling dp()")
             return self
         else:
-            return self._descend(df)
+            last = self._dppd_proxy._get_wrapped()
+            return self._descend(df, parent=last)
 
     def __getattr__(self, attr):
         if self.df is None:
@@ -214,7 +223,7 @@ class ReplacableProxy(wrapt.ObjectProxy):
     def pd(self):
         res = self._get_wrapped()
         if isinstance(res, Dppd):
-            return res.df
+            return res.pd
         else:
             return res
 
@@ -292,7 +301,7 @@ class dppd:
         self.__dppd_proxy = ReplacableProxy(None)
         # and X is always the latest DataFrame.
         self.__X_proxy = DPPDAwareProxy(None, self.__dppd_proxy)
-        self.dppd = Dppd(self.df, self.__dppd_proxy, self.__X_proxy)
+        self.dppd = Dppd(self.df, self.__dppd_proxy, self.__X_proxy, None)
 
     def __iter__(self):
         """Support to be able to say dp, X = dppd().
