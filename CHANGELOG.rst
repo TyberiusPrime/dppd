@@ -5,6 +5,7 @@ Changelog
 
 unreleased
 - a column spec of None now means 'all columns' (useful for e.g. distinct)
+- added categorize verb for DataFrames
 
 0.16
 - replaced alias_verb by extending register_verb(name=...) to register_verb(names=[...], ...)
