@@ -185,6 +185,10 @@ class Dppd:
             return self._descend(df, parent=last)
 
     def __getattr__(self, attr):
+        if attr == '__qualname__':
+            raise AttributeError("%s object has no attribute '__qualname__'" % (type(self)))
+
+        print(attr)
         if self.df is None:
             raise ValueError("Dppd not initialized with a DataFrame")
         if (attr, type(self.df)) in verb_registry:
