@@ -1,6 +1,11 @@
 Extending dppd
 ==============
 
+Known extensions
+-----------------
+  * `dppd_plotnine <https://github.com/TyberiusPrime/dppd_plotnine>`_ allows plotting
+    with plotnine, the python ggplot implementation.
+
 
 Custom verbs
 ------------

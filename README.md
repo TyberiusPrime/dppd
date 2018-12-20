@@ -32,4 +32,6 @@ Please see our full documentation at https://dppd.readthedocs.io/en/latest/
 for more details and a list of the supported verbs.
 
 
+Also check out [dppd_plotnine](https://github.com/TyberiusPrime/dppd_plotnine)
+
 
