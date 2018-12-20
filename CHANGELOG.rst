@@ -2,10 +2,9 @@
 Changelog
 =========
 
-unreleased
+0.16
 - replaced alias_verb by extending register_verb(name=...) to register_verb(names=[...], ...)
-- support for pandas 0.22.0 which apperantly had the DataFrameGroupBy at a slightly
-  different location
+- support for pandas 0.22.0 
 
 Version 0.15
 ============
