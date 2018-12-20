@@ -1,4 +1,5 @@
-sudo: false
+sudo: true
+dist: xenial
 
 language: python
 
@@ -10,8 +11,6 @@ matrix:
       env:
         - JOB: 'UNITTEST_3.7'
         - FULL_DEPS: true
-    - dist: xenial
-    - sudo: yes
     - python: 3.6
       env:
         - JOB: 'UNITTEST'
