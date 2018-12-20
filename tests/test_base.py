@@ -108,6 +108,7 @@ def test_register_verb_raises_on_non_identifier():
 
 def test_register_verb_aliases():
     import dppd.base
+
     def shu():
         pass
 
@@ -268,13 +269,13 @@ def test_straight_dp_raises():
 
 def test_stacking():
     dp, X = dppd()
-    a = dp(mtcars).select(["name", "hp", "cyl"])
+    dp(mtcars).select(["name", "hp", "cyl"])
     b = dp(mtcars).select("hp").pd
     assert_frame_equal(b, mtcars[["hp"]])
     assert_frame_equal(X, mtcars[["name", "hp", "cyl"]])
     c = dp.pd
     assert_frame_equal(c, mtcars[["name", "hp", "cyl"]])
-    assert X == None  # since it's the proxy, is will fail
+    assert X == None  # noqa:E711 since it's the proxy, is will fail
 
 
 def test_forking():
@@ -286,7 +287,7 @@ def test_forking():
     c = dp(a).select(X.hp).head().pd
     assert_series_equal(c["hp"], mtcars["hp"].head())
     assert_series_equal(b["name"], mtcars["name"].head())
-    assert X == None  # since it's the proxy, is will fail
+    assert X == None  # noqa:E711 since it's the proxy, is will fail
 
 
 def test_forking_context_manager():

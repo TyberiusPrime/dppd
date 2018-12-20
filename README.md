@@ -1,6 +1,6 @@
 # dppd
 
-| Build status: | ![build status](https://travis-ci.com/TyberiusPrime/dppd.svg?branch=master) |
+| Build status: | [![Build Status](https://travis-ci.com/TyberiusPrime/dppd.svg?branch=master)](https://travis-ci.com/TyberiusPrime/dppd)|
 |---------------|-----------------------------------------------------------------------------|
 | Documentation | https://dppd.readthedocs.io/en/latest/
 

@@ -215,7 +215,7 @@ def distinct_series(df, keep="first"):
     return df[~duplicated]
 
 
-@register_verb(['transassign','transmutate'], types=pd.DataFrame)
+@register_verb(["transassign", "transmutate"], types=pd.DataFrame)
 def transassign(df, **kwargs):
     """Verb: Creates a new dataframe from the columns of the old.
 
@@ -224,7 +224,7 @@ def transassign(df, **kwargs):
     return pd.DataFrame(kwargs, index=df.index)
 
 
-@register_verb(["mutate", 'define'], types=[pd.DataFrame])
+@register_verb(["mutate", "define"], types=[pd.DataFrame])
 def mutate_DataFrame(df, **kwargs):
     """Verb: add columns to a DataFrame defined by kwargs:
 
@@ -274,7 +274,7 @@ def mutate_DataFrame(df, **kwargs):
     return df.assign(**to_assign)
 
 
-@register_verb(["mutate", 'define'], types=[DataFrameGroupBy])
+@register_verb(["mutate", "define"], types=[DataFrameGroupBy])
 def mutate_DataFrameGroupBy(grp, **kwargs):
     """Verb: add columns to the DataFrame used in the GroupBy.
 
@@ -426,7 +426,7 @@ def add_count(df):
         return dp.mutate(count=len).pd
 
 
-@register_verb(["summarize", 'summarise'], types=[pd.DataFrame, DataFrameGroupBy])
+@register_verb(["summarize", "summarise"], types=[pd.DataFrame, DataFrameGroupBy])
 def summarize(obj, *args):
     """Summarize by group.
 
