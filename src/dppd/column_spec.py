@@ -88,6 +88,7 @@ def parse_column_specification(df_columns, column_spec, return_list=False):
             * pd.Index - interpreted as a list of column names - example: select(X.select_dtypes(int).columns)
             * (regexps_str, ) tuple - run re.search() on each column name
             * a callable f, which takes a string column name and returns a bool whether to include the column.
+            * None -> all columns
 
         return_list : int
             * If return_list is falsiy, return a boolean vector.
