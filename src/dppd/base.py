@@ -120,10 +120,12 @@ def register_type_methods_as_verbs(cls, excluded):
                         register_verb(df_method, types=cls)(attr)
                     else:
                         register_property(df_method, types=cls)
-                except AttributeError as e:  # this happens in pandas < 0.23 for DataFrame.columns
+                except AttributeError as e:  # pragma: no cover
+                    # this happens in pandas < 0.23 for DataFrame.columns
                     if "'NoneType' object has no attribute '_data'" in str(e):
                         register_property(df_method, types=cls)
                     else:
+                        # just a defensive measure
                         raise  # pragma: no cover
 
 
