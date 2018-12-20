@@ -97,7 +97,9 @@ def parse_column_specification(df_columns, column_spec, return_list=False):
     """
     result = None
     # the easy cases
-    if (
+    if column_spec is None:
+        return df_columns
+    elif (
         isinstance(column_spec, pd.Series) or isinstance(column_spec, np.ndarray)
     ) and column_spec.dtype == bool:
         result = column_spec
