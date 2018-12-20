@@ -141,6 +141,18 @@ def test_distinct_dataFrame():
     assert_frame_equal(should, actual)
 
 
+def test_distinct_dataFrame_all_columns():
+    df = pd.DataFrame({"a": list(range(5)) + list(range(5)), "b": list(range(10))})
+    should = df
+    actual = dp(df).distinct().pd
+    assert_frame_equal(should, actual)
+
+    df = pd.DataFrame({"a": list(range(5)) + list(range(5))})
+    should = df.head(5)
+    actual = dp(df).distinct().pd
+    assert_frame_equal(should, actual)
+
+
 def test_distinct_series():
     a = pd.Series(["a", "a", "b", "c", "d", "b"])
     should = a.iloc[[0, 2, 3, 4]]
