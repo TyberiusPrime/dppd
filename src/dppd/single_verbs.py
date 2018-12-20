@@ -4,8 +4,8 @@ from .base import register_verb, register_type_methods_as_verbs
 from .column_spec import parse_column_specification, series_and_strings_to_names
 
 # register all pandas.DataFrame functions and properties.
-DataFrameGroupBy = pd.core.groupby.groupby.DataFrameGroupBy
-SeriesGroupBy = pd.core.groupby.groupby.SeriesGroupBy
+DataFrameGroupBy = pd.core.groupby.DataFrameGroupBy
+SeriesGroupBy = pd.core.groupby.SeriesGroupBy
 
 
 register_type_methods_as_verbs(
