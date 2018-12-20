@@ -19,7 +19,7 @@ register_type_methods_as_verbs(
 
 register_type_methods_as_verbs(pd.Series, ["select"])
 register_type_methods_as_verbs(DataFrameGroupBy, ["select"])
-register_type_methods_as_verbs(pd.core.groupby.groupby.SeriesGroupBy, [])
+register_type_methods_as_verbs(SeriesGroupBy, [])
 
 
 def group_variables(grp):
@@ -29,16 +29,10 @@ def group_variables(grp):
 def group_extract_params(grp):
     if grp.axis != 0:
         raise ValueError(f"Verbs assume that groupby is on axis=0, was {grp.axis}")
-    res = {
-        "by": group_variables(grp),
-        "squeeze": grp.squeeze,
-        "axis": grp.axis,
-        "level": grp.level,
-        "as_index": grp.as_index,
-        "sort": grp.sort,
-        "group_keys": grp.group_keys,
-        "observed": grp.observed,
-    }
+    res = {"by": group_variables(grp)}
+    for k in ["squeeze", "axis", "level", "as_index", "sort", "group_keys", "observed"]:
+        if hasattr(grp, k):
+            res[k] = getattr(grp, k)
     return res
 
 

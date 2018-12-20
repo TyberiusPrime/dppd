@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import pandas.testing
 from plotnine.data import mtcars, diamonds
+from collections import OrderedDict
 
 assert_series_equal = pandas.testing.assert_series_equal
 
@@ -20,6 +21,14 @@ dp, X = dppd()
 __author__ = "Florian Finkernagel"
 __copyright__ = "Florian Finkernagel"
 __license__ = "mit"
+
+
+def ordered_DataFrame(d, index=None):
+    """Prior to pandas 0.23 (and python 3.6) the order
+    of columns in a DataFrame only followed the definition order for OrderedDicts.
+    """
+    od = OrderedDict(d)
+    return pd.DataFrame(od, index=index)
 
 
 def test_head():
@@ -155,7 +164,13 @@ def test_add_count():
     df = pd.DataFrame({"x": [1, 5, 2, 2, 4, 0, 4], "y": [1, 2, 3, 4, 5, 6, 5]})
     actual = dp(df).add_count().pd
     should = pd.DataFrame(
-        {"x": [1, 5, 2, 2, 4, 0, 4], "y": [1, 2, 3, 4, 5, 6, 5], "count": len(df)}
+        OrderedDict(
+            [
+                ("x", [1, 5, 2, 2, 4, 0, 4]),
+                ("y", [1, 2, 3, 4, 5, 6, 5]),
+                ("count", len(df)),
+            ]
+        )
     )
     # should.index = [5, 0, 2, 3, 4, 6, 1]
     assert_frame_equal(should, actual)
@@ -164,7 +179,7 @@ def test_add_count():
 def test_groupby_add_count():
     df = pd.DataFrame({"x": [1, 5, 2, 2, 4, 0, 4], "y": [1, 2, 3, 4, 5, 6, 5]})
     actual = dp(df).groupby("x").add_count().ungroup().pd
-    should = pd.DataFrame(
+    should = ordered_DataFrame(
         {
             "x": [1, 5, 2, 2, 4, 0, 4],
             "y": [1, 2, 3, 4, 5, 6, 5],
@@ -264,7 +279,7 @@ def test_grouped_mutate_returns_scalar_per_group():
         .pd.sort_index()
     )
     should = mtcars.groupby("cyl").agg("count")["name"]
-    should = pd.DataFrame(
+    should = ordered_DataFrame(
         {"cyl": mtcars.cyl, "count": [should[cyl] for cyl in mtcars.cyl]},
         index=mtcars.index,
     )
@@ -281,7 +296,7 @@ def test_grouped_mutate_returns_scalar_per_group_str():
         .pd.sort_index()
     )
     should = mtcars.groupby("cyl").agg("count")["name"]
-    should = pd.DataFrame(
+    should = ordered_DataFrame(
         {"cyl": mtcars.cyl, "count": ["X" + str(should[cyl]) for cyl in mtcars.cyl]},
         index=mtcars.index,
     )
@@ -354,7 +369,7 @@ def test_grouped_mutate_returns_scalar():
         .pd.sort_index()
     )
     should = mtcars.groupby("cyl").agg("count")["name"]
-    should = pd.DataFrame({"cyl": mtcars.cyl, "count": 4}, index=mtcars.index)
+    should = ordered_DataFrame({"cyl": mtcars.cyl, "count": 4}, index=mtcars.index)
     assert_frame_equal(should, actual)
 
 
@@ -368,7 +383,7 @@ def test_grouped_mutate_returns_series():
         .pd.sort_index()
     )
     should = mtcars.groupby("cyl").agg("count")["name"]
-    should = pd.DataFrame(
+    should = ordered_DataFrame(
         {"cyl": mtcars.cyl, "count": pd.Series(range(len(mtcars)))}, index=mtcars.index
     )
     assert_frame_equal(should, actual)
@@ -381,7 +396,9 @@ def test_grouped_mutate_in_non_group():
         .select("count")
         .pd.sort_index()
     )
-    should = pd.DataFrame({"count": [len(mtcars)] * len(mtcars)}, index=mtcars.index)
+    should = ordered_DataFrame(
+        {"count": [len(mtcars)] * len(mtcars)}, index=mtcars.index
+    )
     assert_frame_equal(should, actual)
 
 
@@ -591,7 +608,9 @@ def test_do():
 
     actual = dp(mtcars).groupby("cyl").select("hp").do(count_and_count_unique).pd
     should = pd.DataFrame(
-        {"cyl": [4, 6, 8], "count": [11, 7, 14], "unique": [10, 4, 9]}
+        OrderedDict(
+            [("cyl", [4, 6, 8]), ("count", [11, 7, 14]), ("unique", [10, 4, 9])]
+        )
     )
     assert_frame_equal(should, actual)
 
@@ -609,7 +628,13 @@ def test_do_categorical_grouping():
         .pd
     )
     should = pd.DataFrame(
-        {"cyl": pd.Categorical([4, 6, 8]), "count": [11, 7, 14], "unique": [10, 4, 9]}
+        OrderedDict(
+            [
+                ("cyl", pd.Categorical([4, 6, 8])),
+                ("count", [11, 7, 14]),
+                ("unique", [10, 4, 9]),
+            ]
+        )
     )
     assert_frame_equal(should, actual)
 
@@ -631,12 +656,14 @@ def test_do_group2():
         dp(mtcars).groupby(["cyl", "am"]).select("hp").do(count_and_count_unique).pd
     )
     should = pd.DataFrame(
-        {
-            "cyl": {0: 4, 1: 4, 2: 6, 3: 6, 4: 8, 5: 8},
-            "am": {0: 0, 1: 1, 2: 0, 3: 1, 4: 0, 5: 1},
-            "count": {0: 3, 1: 8, 2: 4, 3: 3, 4: 12, 5: 2},
-            "unique": {0: 3, 1: 7, 2: 3, 3: 2, 4: 7, 5: 2},
-        }
+        OrderedDict(
+            [
+                ("cyl", {0: 4, 1: 4, 2: 6, 3: 6, 4: 8, 5: 8}),
+                ("am", {0: 0, 1: 1, 2: 0, 3: 1, 4: 0, 5: 1}),
+                ("count", {0: 3, 1: 8, 2: 4, 3: 3, 4: 12, 5: 2}),
+                ("unique", {0: 3, 1: 7, 2: 3, 3: 2, 4: 7, 5: 2}),
+            ]
+        )
     )
     assert_frame_equal(should, actual)
 

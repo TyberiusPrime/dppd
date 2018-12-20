@@ -92,6 +92,7 @@ def test_sample():
 
 def test_index():
     import dppd.base
+
     df = pd.DataFrame(
         {
             "a": [str(x) for x in (range(10))],
@@ -131,12 +132,16 @@ def test_assign():
 
 
 def test_assign_in_order():
-    df = pd.DataFrame(
-        {"a": [str(x) for x in (range(10))], "bb": 10, "ccc": list(range(20, 30))}
-    ).set_index("a")
-    should = df.assign(d=list(range(30, 40)), d2=lambda x: x["d"] + 2)
-    actual = dp(df).assign(d=X["ccc"] + X["bb"], d2=lambda x: x["d"] + 2).pd
-    assert_frame_equal(should, actual)
+    if (
+        pd.__version__ > "0.22.0"
+    ):  # can only assign within the same call starting with pandas 0.23
+        df = pd.DataFrame(
+            {"a": [str(x) for x in (range(10))], "bb": 10, "ccc": list(range(20, 30))}
+        ).set_index("a")
+        should = df.assign(d=list(range(30, 40)))
+        should = should.assign(d2=lambda x: x["d"] + 2)
+        actual = dp(df).mutate(d=X["ccc"] + X["bb"], d2=lambda x: x["d"] + 2).pd
+        assert_frame_equal(should, actual)
 
 
 def test_rename():

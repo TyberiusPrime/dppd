@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import pandas.testing
 from plotnine.data import mtcars
+from .test_single_verbs import ordered_DataFrame
 
 assert_series_equal = pandas.testing.assert_series_equal
 assert_frame_equal = pandas.testing.assert_frame_equal
@@ -15,7 +16,7 @@ __license__ = "mit"
 
 
 def get_stocks():
-    return pd.DataFrame(
+    return ordered_DataFrame(
         {
             "time": pd.date_range("2009-01-01", "2009-01-10"),
             "X": np.random.normal(0, 1, size=10),
@@ -38,7 +39,7 @@ def test_basic_gather():
 
 
 def test_gather_iris():
-    mini_iris = pd.DataFrame(
+    mini_iris = ordered_DataFrame(
         {
             "sepal.length": {0: 5.1, 50: 7.0, 100: 6.3},
             "sepal.width": {0: 3.5, 50: 3.2, 100: 3.3},
@@ -56,7 +57,7 @@ def test_gather_iris():
         )
         .pd
     )
-    should = pd.DataFrame(
+    should = ordered_DataFrame(
         {
             "target": [
                 "setosa",

@@ -10,6 +10,11 @@ matrix:
       env:
         - JOB: 'UNITTEST'
         - FULL_DEPS: true
+    - python: 3.6
+      env:
+        - JOB: 'UNITTEST_pd_0.22'
+        - FULL_DEPS: true
+          
           
     - python: 3.6
       env:
@@ -38,6 +43,9 @@ install:
   - |
     if [[ "$JOB" == "UNITTEST" ]]; then
       pip install -e .[testing]
+    elif [[ "$JOB" == "UNITTEST_pd_0.22" ]]; then
+      pip install -e .[testing]
+      pip install pandas==0.22.0
     elif [[ "$JOB" == "LINT" ]]; then
       pip install flake8
     elif [[ "$JOB" == "DOCS" ]]; then
@@ -50,7 +58,11 @@ script:
     if [[ "$JOB" == "UNITTEST" ]]; then
       coverage erase
       pytest
-      elif [[ "$JOB" == "DOCS" ]]; then
+    elif [[ "$JOB" == "UNITTEST_pd_0.22" ]]; then
+      coverage erase
+      pytest
+    
+    elif [[ "$JOB" == "DOCS" ]]; then
       # low pandoc version leads to a warning so
       # SPHINXOPTS=-W fails
       python setup.py docs

@@ -113,12 +113,18 @@ def register_property(name, types=None):
 def register_type_methods_as_verbs(cls, excluded):
     for df_method in dir(cls):
         if df_method not in excluded:
-            attr = getattr(cls, df_method)
             if not df_method.startswith("_"):
-                if hasattr(attr, "__call__"):
-                    register_verb(df_method, types=cls)(attr)
-                else:
-                    register_property(df_method, types=cls)
+                try:
+                    attr = getattr(cls, df_method)
+                    if hasattr(attr, "__call__"):
+                        register_verb(df_method, types=cls)(attr)
+                    else:
+                        register_property(df_method, types=cls)
+                except AttributeError as e:  # this happens in pandas < 0.23 for DataFrame.columns
+                    if "'NoneType' object has no attribute '_data'" in str(e):
+                        register_property(df_method, types=cls)
+                    else:
+                        raise  # pragma: no cover
 
 
 class Dppd:
