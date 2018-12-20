@@ -784,7 +784,6 @@ def astype_DataFrame(df, columns, dtype, **kwargs):
 @register_verb("categorize", types=pd.DataFrame)
 def categorize_DataFrame(df, columns=None, categories=None, ordered=None):
     columns = parse_column_specification(df.columns, columns, return_list=True)
-    print("colunms", columns)
     df = mutate_DataFrame(
         df, **{c: pd.Categorical(df[c], categories, ordered) for c in columns}
     )
