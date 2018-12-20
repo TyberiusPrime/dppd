@@ -33,8 +33,8 @@ def group_extract_params(grp):
     for k in ["squeeze", "axis", "level", "as_index", "sort", "group_keys", "observed"]:
         if hasattr(grp, k):
             res[k] = getattr(grp, k)
-        else:  # pragma: nocover
-            pass
+        else:  # pragma: no cover
+            pass  # pragma: no cover
     return res
 
 
