@@ -6,6 +6,10 @@ language: python
 matrix:
   fast_finish: true
   include:
+    - python: 3.7
+      env:
+        - JOB: 'UNITTEST_3.7'
+        - FULL_DEPS: true
     - python: 3.6
       env:
         - JOB: 'UNITTEST'
@@ -14,12 +18,6 @@ matrix:
       env:
         - JOB: 'UNITTEST_pd_0.22'
         - FULL_DEPS: true
-          
-          
-    - python: 3.6
-      env:
-        - JOB: 'LINT'
-        - FULL_DEPS: false
     - python: 3.6
       env:
         - JOB: 'DOCS'
@@ -43,11 +41,15 @@ install:
   - |
     if [[ "$JOB" == "UNITTEST" ]]; then
       pip install -e .[testing]
+      pip install flake8
     elif [[ "$JOB" == "UNITTEST_pd_0.22" ]]; then
       pip install -e .[testing]
       pip install pandas==0.22.0
-    elif [[ "$JOB" == "LINT" ]]; then
       pip install flake8
+    elif [[ "$JOB" == "UNITTEST_3.7" ]]; then
+      pip install -e .[testing]
+      pip install flake8
+    
     elif [[ "$JOB" == "DOCS" ]]; then
     pip install sphinx sphinx-bootstrap-theme
     fi
@@ -61,14 +63,14 @@ script:
     elif [[ "$JOB" == "UNITTEST_pd_0.22" ]]; then
       coverage erase
       pytest
-    
+    elif [[ "$JOB" == "UNITTEST_3.7" ]]; then
+      coverage erase
+      pytest
+     
     elif [[ "$JOB" == "DOCS" ]]; then
       # low pandoc version leads to a warning so
       # SPHINXOPTS=-W fails
       python setup.py docs
-    elif [[ "$JOB" == "LINT" ]]; then
-    #make lint
-    flake8 
     fi
 
 
