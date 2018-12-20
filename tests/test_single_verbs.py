@@ -858,3 +858,19 @@ def test_as_type_kwargs():
         **{x: mtcars[x].astype(int) for x in mtcars.columns if x != "name"}
     )
     assert_frame_equal(should, actual)
+
+
+def test_categorize():
+    df = pd.DataFrame(
+        {"a": ["hello", "hello", "world"], "b": ["another", "category", "level"]}
+    )
+    actual = dp(df).categorize("a").pd
+    actual2 = dp(df).categorize().pd
+    assert isinstance(actual["a"].dtype, pd.api.types.CategoricalDtype)
+    assert not isinstance(actual["b"].dtype, pd.api.types.CategoricalDtype)
+    assert isinstance(actual2["a"].dtype, pd.api.types.CategoricalDtype)
+    assert isinstance(actual2["b"].dtype, pd.api.types.CategoricalDtype)
+    actual3 = (
+        dp(df).categorize(None, ["hello", "world", "another", "category", "level"]).pd
+    )
+    assert len(actual3["a"].cat.categories) == 5
