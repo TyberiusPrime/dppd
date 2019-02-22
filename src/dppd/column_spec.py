@@ -35,7 +35,14 @@ def _parse_column_spec_from_strings(df_columns, column_spec, return_list):
     ordered = []
     forward_seen = False
     inverse_seen = False
+    true_seen = False
     for c in column_spec:
+        if c is True:
+            for oc in df_columns:
+                if not (oc, True) in ordered and not (oc, False) in ordered:
+                    ordered.append((oc, False))
+            true_seen = True
+            break  # everything beyond the True is ignored
         if c in df_columns:
             if isinstance(c, str) and c[0] == "-" and c[1:] in df_columns:
                 raise ValueError(
@@ -53,15 +60,14 @@ def _parse_column_spec_from_strings(df_columns, column_spec, return_list):
                 raise KeyError(f"Column not found {c}")
     if return_list == 2:
         return ordered
-
     else:
-        if forward_seen and inverse_seen:
+        if forward_seen and inverse_seen and not true_seen:
             raise ValueError(
                 "Must not mix normal and inversed (-column_name) specification"
             )
         elif forward_seen:
             if return_list:
-                return [x[0] for x in ordered]
+                return [x[0] for x in ordered if not x[1]]
             else:
                 return df_columns.isin(column_spec)
         elif inverse_seen:
@@ -82,6 +88,7 @@ def parse_column_specification(df_columns, column_spec, return_list=False):
     ----------
         column_spec : various
             * str, [str] - select columns by name, (always returns an DataFrame, never a Series)
+            * [b, a, -c, True] - select b, a (by name, in order) drop c, then add everything else in alphabetical order
             * pd.Series / np.ndarray, dtype == bool: select columns matching this bool vector, example: ``select(X.name.str.startswith('c'))``
             * pd.Series, [pd.Series] - select columns by series.name
             * "-column_name" or ["-column_name1","-column_name2"]: drop all other columns (or invert search order in arrange)

@@ -42,6 +42,26 @@ def test_select_list():
     assert_frame_equal(should, actual)
 
 
+def test_select_list_partial_column_order():
+    d = {}
+    for a in range(ord("a"), ord("z") + 1):
+        d[chr(a)] = [1]
+    df = pd.DataFrame(d)
+    should = df[list("hzacbdefgijklmnopqrstuvwxy")]
+    actual = dp(df).select(["h", "z", "a", "c", True]).pd
+    assert_frame_equal(should, actual)
+
+
+def test_select_list_partial_column_order_dropping_some():
+    d = {}
+    for a in range(ord("a"), ord("z") + 1):
+        d[chr(a)] = [1]
+    df = pd.DataFrame(d)
+    should = df[list("hacbdefgijklmnopqrstuvwxy")]
+    actual = dp(df).select(["h", "-z", "a", "c", True]).pd
+    assert_frame_equal(should, actual)
+
+
 def test_unselect_list():
     df = pd.DataFrame(
         {"a": list(range(10)), "bb": list(range(10)), "cc": list(range(10))}
