@@ -207,6 +207,16 @@ class Dppd:
     def __getitem__(self, slice):
         return self._descend(self.df[slice])
 
+    def __dir__(self):
+        result = set()
+        my_typ = type(self.df)
+        for name, typ in verb_registry.keys():
+            if typ is None or typ is my_typ:
+                result.add(name)
+        for k in property_registry[my_typ]:
+            result.add(name)
+        return sorted(result)
+
 
 class ReplacableProxy(wrapt.ObjectProxy):
     """A proxy that can change what it proxies for
