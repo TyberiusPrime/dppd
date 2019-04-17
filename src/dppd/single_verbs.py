@@ -47,6 +47,26 @@ def identity(df):
     return df
 
 
+@register_verb(name="print", types=None)
+def _print(obj):
+    print(obj)
+    return obj
+
+
+@register_verb(name="print_type", types=None)
+def _type(obj):
+    """Verb: No-op."""
+    print(type(obj))
+    return obj
+
+
+@register_verb(name="print_dir", types=None, pass_dppd=True)
+def _dir(obj):
+    """Verb: print dir(obj)"""
+    print(dir(obj))
+    return obj
+
+
 @register_verb("ungroup", types=[DataFrameGroupBy])
 def ungroup_DataFrameGroupBy(grp):
     df = grp._selected_obj
@@ -719,12 +739,6 @@ def seperate(df, column, new_names, sep=".", remove=False):
         df = df.drop(column, axis=1)
     result = pd.concat([df, s], axis=1)
     return result
-
-
-@register_verb("print", types=[pd.DataFrame, pd.Series])
-def print_DataFrame(df):
-    print(df)
-    return df
 
 
 @register_verb("print", types=DataFrameGroupBy)

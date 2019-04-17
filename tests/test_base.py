@@ -324,3 +324,16 @@ def test_series_methods():
 def test_group_on_series_raises():
     with pytest.raises(KeyError):
         dp(mtcars).sum().groupby("no_such_columns")
+
+
+def test_dir():
+    from dppd import base
+
+    dp, X = dppd()
+    actual = set(dir(dp(mtcars)))
+    should_min = set(base.property_registry[pd.DataFrame])
+    delta = should_min.difference(actual)
+    print(sorted(actual))
+    print(sorted(delta))
+    assert not len(delta)
+    assert len(actual) > len(should_min)
