@@ -902,5 +902,11 @@ def test_iter_tuples_in_group_by():
     actual = {k: list(v) for (k, v) in dp(mtcars).groupby("cyl").itertuples()}
     should = {}
     for key, sub_df in mtcars.groupby("cyl"):
-        should[key, ] = list(sub_df.itertuples())
+        should[key,] = list(sub_df.itertuples())
     assert actual == should
+
+
+def test_natsort():
+    df = pd.DataFrame({"a": ["1", "16", "2"], "b": ["another", "category", "level"]})
+    df = dp(df).natsort("a").pd
+    assert (df["a"] == ["1", "2", "16"]).all()
