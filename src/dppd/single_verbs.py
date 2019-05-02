@@ -799,6 +799,13 @@ def sort_values_DataFrameGroupBy(
     return arrange_DataFrameGroupBy(grp, column_spec, kind, na_position)
 
 
+@register_verb("natsort", types=pd.DataFrame)
+def natsort_DataFrame(df, column):
+    from natsort import order_by_index, index_natsorted
+
+    return df.reindex(index=order_by_index(df.index, index_natsorted(df[column])))
+
+
 @register_verb("astype", types=pd.DataFrame)
 def astype_DataFrame(df, columns, dtype, **kwargs):
     columns = parse_column_specification(df, columns, return_list=True)
