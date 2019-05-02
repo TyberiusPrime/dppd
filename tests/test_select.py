@@ -355,3 +355,8 @@ def test_select_None_return_bool_vec():
     )
     actual = parse_column_specification(df, None, return_list=False)
     assert (actual == True).all()  # noqa: E712
+
+
+def test_select_sort():
+    actual = dp(mtcars).select([True])
+    assert (actual.columns == sorted(mtcars.columns)).all()

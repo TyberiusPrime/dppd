@@ -815,7 +815,7 @@ def categorize_DataFrame(df, columns=None, categories=None, ordered=None):
 
 
 @register_verb("ends", types=pd.DataFrame)
-def ends(df, n):
+def ends(df, n=5):
     """Head(n)&Tail(n) at once"""
     return df.iloc[np.r_[0:n, -n:0]]
 
