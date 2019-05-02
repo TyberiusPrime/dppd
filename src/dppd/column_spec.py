@@ -80,7 +80,7 @@ def _parse_column_spec_from_strings(df_columns, column_spec, return_list):
             raise ValueError("This else should not be reached")
 
 
-def parse_column_specification(df_columns, column_spec, return_list=False):
+def parse_column_specification(df, column_spec, return_list=False):
     """Parse a column specification
 
 
@@ -95,6 +95,7 @@ def parse_column_specification(df_columns, column_spec, return_list=False):
             * pd.Index - interpreted as a list of column names - example: select(X.select_dtypes(int).columns)
             * (regexps_str, ) tuple - run re.search() on each column name
             * a callable f, which takes a string column name and returns a bool whether to include the column.
+            * a type, in which case the request will be forwarded to pandas.DataFrame.select_dtypes(include=...)). Example: numpy.number
             * None -> all columns
 
         return_list : int
@@ -104,15 +105,23 @@ def parse_column_specification(df_columns, column_spec, return_list=False):
 
     """
     result = None
+    df_columns = df.columns
     # the easy cases
+    print(type(column_spec))
     if column_spec is None:
-        return df_columns
+        if return_list:
+            return df_columns
+        else:
+            return np.array([True] * len(df.columns), dtype=bool)
     elif (
         isinstance(column_spec, pd.Series) or isinstance(column_spec, np.ndarray)
     ) and column_spec.dtype == bool:
         result = column_spec
     elif isinstance(column_spec, tuple):
         result = _parse_column_spec_regexps_search(df_columns, column_spec)
+    elif isinstance(column_spec, type):
+        ok = df.select_dtypes(column_spec).columns
+        result = np.array([c in ok for c in df_columns], bool)
     elif callable(column_spec):
         result = np.array([column_spec(c) for c in df_columns], bool)
     if result is not None:
@@ -127,7 +136,6 @@ def parse_column_specification(df_columns, column_spec, return_list=False):
         column_spec = list(column_spec)
     elif isinstance(column_spec, pd.Series):
         column_spec = [column_spec.name]
-
     if isinstance(column_spec, list):
         column_spec = series_and_strings_to_names(column_spec)
         return _parse_column_spec_from_strings(df_columns, column_spec, return_list)
