@@ -109,7 +109,6 @@ def parse_column_specification(df, column_spec, return_list=False):
     result = None
     df_columns = df.columns
     # the easy cases
-    print(type(column_spec))
     if column_spec is None:
         if return_list:
             return df_columns
