@@ -1,2 +1,3 @@
 sphinx-bootstrap-theme
 pandas
+wrapt
