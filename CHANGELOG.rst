@@ -4,11 +4,11 @@ Changelog
 
 
 unreleased
-==========
 
 0.17
 ==========
 
+=======
 - a column spec of None now means 'all columns' (useful for e.g. distinct)
 - added categorize verb for DataFrames
 
