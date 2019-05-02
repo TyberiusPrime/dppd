@@ -4,8 +4,8 @@ The why of dppd
 Undoubtly, in R dplyr is a highly useful library
 since many of it's verbs are not available otherwise.
 
-But pandas, which has been moving to support `method
-chaining<https://tomaugspurger.github.io/method-chaining.html>` in the last few releases
+But pandas, which has been moving to support `method chaining<https://tomaugspurger.github.io/method-chaining.html>`_
+in the last few releases
 already does most of dplyr's verbs, so why is there half a dozen 
 dplyr clones for python, including this one (see <comparison>)?
 
@@ -80,7 +80,7 @@ methods. It is verbose though, and sort_values with it's 'ascending' parameter
 is way to many characters just to invert the sorting order on a column.
 
 Dppd supports a mini language for column specifications - see
-:func:`dppd.column_spec.parse_column_specification` for details::
+:func:`dppd.column_spec.parse_column_specification`_ for details::
 
   # drop column name
   >>> dp(mtcars).select('-name').head(1).pd  
