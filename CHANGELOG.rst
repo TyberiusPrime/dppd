@@ -6,8 +6,9 @@ Changelog
 unreleased
 ==========
 
- - support for itertuples on groupBy objects
- - column specs now support types (and forward the query to select_dtypes)
+- support for itertuples on groupBy objects
+- column specs now support types (and forward the query to select_dtypes)
+- ends() for DataFrames
 
 0.17
 ==========

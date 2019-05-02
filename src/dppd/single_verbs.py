@@ -632,9 +632,7 @@ def gather(df, key, value, value_var_column_spec=None):
 
     """
 
-    value_vars = parse_column_specification(
-        df, value_var_column_spec, return_list=True
-    )
+    value_vars = parse_column_specification(df, value_var_column_spec, return_list=True)
     id_vars = [x for x in df.columns if x not in value_vars]
     return pd.melt(df, id_vars, value_vars, var_name=key, value_name=value)
 
@@ -764,9 +762,7 @@ def arrange_DataFrame(df, column_spec, kind="quicksort", na_position="last"):
     allowed_kinds = "quicksort", "mergesort", "heapsort"
     if not kind in allowed_kinds:
         raise ValueError(f"kind  must be one of {allowed_kinds}")
-    cols_plus_inversed = parse_column_specification(
-        df, column_spec, return_list=2
-    )
+    cols_plus_inversed = parse_column_specification(df, column_spec, return_list=2)
     if not cols_plus_inversed:
         raise ValueError("No columns passed spec - don't know how to sort")
     columns = [x[0] for x in cols_plus_inversed]
@@ -781,9 +777,7 @@ def arrange_DataFrameGroupBy(grp, column_spec, kind="quicksort", na_position="la
     df = grp._selected_obj
     grp_params = group_extract_params(grp)
 
-    cols_plus_inversed = parse_column_specification(
-        df, column_spec, return_list=2
-    )
+    cols_plus_inversed = parse_column_specification(df, column_spec, return_list=2)
     if not cols_plus_inversed:
         raise ValueError("No columns passed spec - don't know how to sort")
     columns = grp_params["by"].copy()
@@ -818,6 +812,12 @@ def categorize_DataFrame(df, columns=None, categories=None, ordered=None):
         df, **{c: pd.Categorical(df[c], categories, ordered) for c in columns}
     )
     return df
+
+
+@register_verb("ends", types=pd.DataFrame)
+def ends(df, n):
+    """Head(n)&Tail(n) at once"""
+    return df.iloc[np.r_[0:n, -n:0]]
 
 
 # dply aliases

@@ -38,6 +38,14 @@ def test_head():
     assert_frame_equal(should, actual)
 
 
+def test_ends():
+    df = pd.DataFrame({"a": list(range(10))})
+    actual = dp(df).ends(2).pd
+    should = df.head(2)
+    should = should.append(df.tail(2))
+    assert_frame_equal(should, actual)
+
+
 def test_2_stage_concat():
     df = pd.DataFrame({"a": list(range(10))})
     a = dp(df).head(5).pd
