@@ -47,12 +47,48 @@ def identity(df):
     return df
 
 
+@register_verb(name="print", types=None)
+def _print(obj):
+    print(obj)
+    return obj
+
+
+@register_verb(name="print_type", types=None)
+def _type(obj):
+    """Verb: No-op."""
+    print(type(obj))
+    return obj
+
+
+@register_verb(name="print_dir", types=None, pass_dppd=True)
+def _dir(obj):
+    """Verb: print dir(obj)"""
+    print(dir(obj))
+    return obj
+
+
 @register_verb("ungroup", types=[DataFrameGroupBy])
 def ungroup_DataFrameGroupBy(grp):
     df = grp._selected_obj
     columns = group_variables(grp)
     other_cols = [x for x in df.columns if x not in columns]
     return df[columns + other_cols]
+
+
+@register_verb(["iter_tuples", "itertuples"], types=[DataFrameGroupBy])
+def iter_tuples_DataFrameGroupBy(grp):
+    df = grp._selected_obj
+    columns = group_variables(grp)
+    by_key = {}
+    for tup in df.itertuples():
+        key = tuple(
+            (getattr(tup, c) for c in columns)
+        )  # replacing this by a evaled() lambda offers no speedup
+        if not key in by_key:
+            by_key[key] = []
+        by_key[key].append(tup)
+    for key, tups in by_key.items():
+        yield key, tups
 
 
 @register_verb("concat", types=[pd.DataFrame, pd.Series])
@@ -82,7 +118,7 @@ def select_DataFrame(df, columns):
     ----------
     colummns : column specifiation or dict
         * column specification, see :func:`dppd.single_verbs.parse_column_specification`
-        * dict {old_name: 'new_name'} - select and rename. old_name may be a str, or a
+        * dict {new_name: 'old_name'} - select and rename. old_name may be a str, or a
           :class:`Series <pd.Series>` (in which case
     """
 
@@ -703,12 +739,6 @@ def seperate(df, column, new_names, sep=".", remove=False):
         df = df.drop(column, axis=1)
     result = pd.concat([df, s], axis=1)
     return result
-
-
-@register_verb("print", types=[pd.DataFrame, pd.Series])
-def print_DataFrame(df):
-    print(df)
-    return df
 
 
 @register_verb("print", types=DataFrameGroupBy)

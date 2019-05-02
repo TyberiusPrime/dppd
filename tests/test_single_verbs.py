@@ -874,3 +874,33 @@ def test_categorize():
         dp(df).categorize(None, ["hello", "world", "another", "category", "level"]).pd
     )
     assert len(actual3["a"].cat.categories) == 5
+
+
+def test_print(capsys):
+    assert isinstance(dp(mtcars).head().print().pd, pd.DataFrame)
+    captured = capsys.readouterr().out
+    print(mtcars.head())
+    captured2 = capsys.readouterr().out
+    assert captured == captured2
+
+
+def test_print_tipe(capsys):
+    assert isinstance(dp(mtcars).head().print_type().pd, pd.DataFrame)
+    captured = capsys.readouterr().out
+    print(type(mtcars.head()))
+    captured2 = capsys.readouterr().out
+    assert captured == captured2
+
+
+def test_print_dir(capsys):
+    assert isinstance(dp(mtcars).head().print_dir().pd, pd.DataFrame)
+    captured = capsys.readouterr().out
+    assert "mutate" in captured
+
+
+def test_iter_tuples_in_group_by():
+    actual = {k: list(v) for (k, v) in dp(mtcars).groupby("cyl").itertuples()}
+    should = {}
+    for key, sub_df in mtcars.groupby("cyl"):
+        should[key, ] = list(sub_df.itertuples())
+    assert actual == should

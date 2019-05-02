@@ -21,7 +21,7 @@ class register_verb:
 
     """
 
-    def __init__(self, name=None, types=None):
+    def __init__(self, name=None, types=None, pass_dppd=False):
         """
         Parameters:
         -----------
@@ -31,22 +31,8 @@ class register_verb:
                 Must be a valid identifer.
             types : type or [type, type,...]
                 this verb only applies to these types
-            full_replacement : bool
-                This verb will do a full replacement of the DataFrame,
-                and will be called as verb(df, dppd._groups),
-                where dppd._groups is either None, or a tuple (sort_before_grouping (bool),
-                group columns [str,...]
-
-            pass_group_key : bool
-                if True, the function get's passed a named paramater group_key
-                which is a tuple with the current grouping variables.
-                Basically, x[0] for x in df.groupby(...) per call
-
-            pass_complete_df :
-                This verb will not be called per group,
-                but with the complete df.
-                Mostly an optimization for select, drop etc.
-
+            pass_dppd:
+                this func will get dppd instead of dppd.df (e.g. for dir)
     """
         self.names = name
         if not isinstance(types, list):
@@ -56,6 +42,7 @@ class register_verb:
             dppd_types.add(t)
             if not t in property_registry:
                 property_registry[t] = set()
+        self.pass_dppd = pass_dppd
 
     def __call__(self, func):
         if self.names is None:
@@ -68,7 +55,10 @@ class register_verb:
 
         def outer(dppd):
             def inner(*args, **kwargs):
-                result = func(dppd.df, *args, **kwargs)
+                if self.pass_dppd:
+                    result = func(dppd, *args, **kwargs)
+                else:
+                    result = func(dppd.df, *args, **kwargs)
                 # no verbs:
                 if type(result) in dppd_types:
                     return dppd._descend(result)
@@ -206,6 +196,16 @@ class Dppd:
 
     def __getitem__(self, slice):
         return self._descend(self.df[slice])
+
+    def __dir__(self):
+        result = set()
+        my_typ = type(self.df)
+        for name, typ in verb_registry.keys():
+            if typ is None or typ is my_typ:
+                result.add(name)
+        for name in property_registry[my_typ]:
+            result.add(name)
+        return sorted(result)
 
 
 class ReplacableProxy(wrapt.ObjectProxy):
