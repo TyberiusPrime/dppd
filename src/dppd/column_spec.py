@@ -76,6 +76,8 @@ def _parse_column_spec_from_strings(df_columns, column_spec, return_list):
                 return list(df_columns[res])
             else:
                 return res
+        elif true_seen:  # query was [True]
+            return sorted(df_columns)
         else:  # pragma: no cover
             raise ValueError("This else should not be reached")
 
