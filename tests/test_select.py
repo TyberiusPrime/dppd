@@ -278,7 +278,7 @@ def test_unselect_empty_list():
 
 
 def test_parse_column_spec_return_list_from_bool():
-    c = pd.Series(["a", "b", "c", "d"])
+    c = pd.DataFrame({"a": [], "b": [], "c": [], "d": []}, index=[])
     actual = parse_column_specification(
         c, np.array([True, False, False, True], bool), return_list=True
     )
@@ -286,19 +286,19 @@ def test_parse_column_spec_return_list_from_bool():
 
 
 def test_parse_column_spec_return_list_from_empty_list():
-    c = pd.Series(["a", "b", "c", "d"])
+    c = pd.DataFrame({"a": [], "b": [], "c": [], "d": []}, index=[])
     actual = parse_column_specification(c, [], return_list=True)
     assert actual == []
 
 
 def test_parse_column_spec_return_list_from_function():
-    c = pd.Series(["a", "b", "c", "d"])
+    c = pd.DataFrame({"a": [], "b": [], "c": [], "d": []}, index=[])
     actual = parse_column_specification(c, (lambda x: x == "a"), return_list=True)
     assert actual == ["a"]
 
 
 def test_parse_column_spec_return_list_from_regexps():
-    c = pd.Series(["a", "b", "c", "d"])
+    c = pd.DataFrame({"a": [], "b": [], "c": [], "d": []}, index=[])
     actual = parse_column_specification(c, ("a|b",), return_list=True)
     assert actual == ["a", "b"]
 
@@ -332,3 +332,26 @@ def test_select_grouped():
 
     should = mtcars[["cyl", "hp", "name", "qsec"]]
     assert_frame_equal(actual, should)
+
+
+def test_select_type():
+    actual = dp(mtcars).select(int).pd
+    should = mtcars[["cyl", "hp", "vs", "am", "gear", "carb"]]
+    assert_frame_equal(actual, should)
+
+
+def test_select_None():
+    df = pd.DataFrame(
+        {"a": list(range(10)), "bb": list(range(10)), "cc": list(range(10))}
+    )
+    should = df
+    actual = dp(df).select(None).pd
+    assert_frame_equal(should, actual)
+
+
+def test_select_None_return_bool_vec():
+    df = pd.DataFrame(
+        {"a": list(range(10)), "bb": list(range(10)), "cc": list(range(10))}
+    )
+    actual = parse_column_specification(df, None, return_list=False)
+    assert (actual == True).all()  # noqa: E712

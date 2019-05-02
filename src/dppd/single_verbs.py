@@ -132,7 +132,7 @@ def select_DataFrame(df, columns):
         return result
     else:
         columns = parse_column_specification(
-            df.columns, columns, return_list=True
+            df, columns, return_list=True
         )  # we want to keep the order if the user passed one in
         return df.loc[:, columns]
 
@@ -143,7 +143,7 @@ def select_DataFrameGroupBy(grp, columns):
         raise ValueError("select on grouped by DataFrames does not support renaming")
     df = grp._selected_obj
     columns = parse_column_specification(
-        df.columns, columns, return_list=True
+        df, columns, return_list=True
     )  # we want to keep the order if the user passed one in
     grp_params = group_extract_params(grp)
     for grp_by in grp_params["by"]:
@@ -165,7 +165,7 @@ def unselect_DataFrame(df, columns):
     if isinstance(columns, dict):
         raise ValueError("unselect does not support renaming (passing a dict)")
     else:
-        column_bool_vector = parse_column_specification(df.columns, columns)
+        column_bool_vector = parse_column_specification(df, columns)
         return df.loc[:, ~column_bool_vector]
 
 
@@ -183,7 +183,7 @@ def unselect_DataFrameGroupBy(grp, columns):
     df = grp._selected_obj
     grp_params = group_extract_params(grp)
     columns = parse_column_specification(
-        df.columns, columns, return_list=True
+        df, columns, return_list=True
     )  # we want to keep the order if the user passed one in
     columns = [x for x in df.columns if (x not in columns) or (x in grp_params["by"])]
     df_out = df.loc[:, columns]
@@ -230,7 +230,7 @@ def distinct_dataframe(df, column_spec=None, keep="first"):
         with possibly fewer rows, but unchanged columns.
 
     """
-    subset = parse_column_specification(df.columns, column_spec, return_list=True)
+    subset = parse_column_specification(df, column_spec, return_list=True)
     duplicated = df.duplicated(subset, keep)
     return df[~duplicated]
 
@@ -633,7 +633,7 @@ def gather(df, key, value, value_var_column_spec=None):
     """
 
     value_vars = parse_column_specification(
-        df.columns, value_var_column_spec, return_list=True
+        df, value_var_column_spec, return_list=True
     )
     id_vars = [x for x in df.columns if x not in value_vars]
     return pd.melt(df, id_vars, value_vars, var_name=key, value_name=value)
@@ -669,10 +669,10 @@ def spread(df, key, value):
 
 
     """
-    key = parse_column_specification(df.columns, key, return_list=True)
+    key = parse_column_specification(df, key, return_list=True)
     if len(key) > 1:
         raise ValueError("key must be a single column")
-    value = parse_column_specification(df.columns, value, return_list=True)
+    value = parse_column_specification(df, value, return_list=True)
     if len(value) > 1:
         raise ValueError("value must be a single column")
 
@@ -707,7 +707,7 @@ def unite(df, column_spec, sep="_"):
         Seperator to join on
     """
 
-    columns = parse_column_specification(df.columns, column_spec, return_list=True)
+    columns = parse_column_specification(df, column_spec, return_list=True)
     return df[columns].apply(lambda x: sep.join(x.astype(str)), axis=1)
 
 
@@ -729,7 +729,7 @@ def seperate(df, column, new_names, sep=".", remove=False):
         wether to drop column
     """
 
-    column = parse_column_specification(df.columns, column, return_list=True)
+    column = parse_column_specification(df, column, return_list=True)
     if len(column) != 1:
         raise ValueError("Must pass in exactly one column")
     s = df[column[0]].str.split(sep, expand=True)
@@ -765,7 +765,7 @@ def arrange_DataFrame(df, column_spec, kind="quicksort", na_position="last"):
     if not kind in allowed_kinds:
         raise ValueError(f"kind  must be one of {allowed_kinds}")
     cols_plus_inversed = parse_column_specification(
-        df.columns, column_spec, return_list=2
+        df, column_spec, return_list=2
     )
     if not cols_plus_inversed:
         raise ValueError("No columns passed spec - don't know how to sort")
@@ -782,7 +782,7 @@ def arrange_DataFrameGroupBy(grp, column_spec, kind="quicksort", na_position="la
     grp_params = group_extract_params(grp)
 
     cols_plus_inversed = parse_column_specification(
-        df.columns, column_spec, return_list=2
+        df, column_spec, return_list=2
     )
     if not cols_plus_inversed:
         raise ValueError("No columns passed spec - don't know how to sort")
@@ -807,13 +807,13 @@ def sort_values_DataFrameGroupBy(
 
 @register_verb("astype", types=pd.DataFrame)
 def astype_DataFrame(df, columns, dtype, **kwargs):
-    columns = parse_column_specification(df.columns, columns, return_list=True)
+    columns = parse_column_specification(df, columns, return_list=True)
     return df.assign(**{x: df[x].astype(dtype, **kwargs) for x in columns})
 
 
 @register_verb("categorize", types=pd.DataFrame)
 def categorize_DataFrame(df, columns=None, categories=None, ordered=None):
-    columns = parse_column_specification(df.columns, columns, return_list=True)
+    columns = parse_column_specification(df, columns, return_list=True)
     df = mutate_DataFrame(
         df, **{c: pd.Categorical(df[c], categories, ordered) for c in columns}
     )
