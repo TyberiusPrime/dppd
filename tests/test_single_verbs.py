@@ -910,7 +910,7 @@ def test_iter_tuples_in_group_by():
     actual = {k: list(v) for (k, v) in dp(mtcars).groupby("cyl").itertuples()}
     should = {}
     for key, sub_df in mtcars.groupby("cyl"):
-        should[key,] = list(sub_df.itertuples())
+        should[key, ] = list(sub_df.itertuples())
     assert actual == should
 
 
