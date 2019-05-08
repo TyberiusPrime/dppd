@@ -4,6 +4,8 @@
 |---------------|-----------------------------------------------------------------------------|
 | Documentation | https://dppd.readthedocs.io/en/latest/
 
+| Code style    | ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
 Dppd is a python [dplyr](dplyr.tidyverse.org) clone.
 
 
@@ -31,5 +33,7 @@ non-standard-evaluation based verbs does for R.
 Please see our full documentation at https://dppd.readthedocs.io/en/latest/
 for more details and a list of the supported verbs.
 
+
+Also check out [dppd_plotnine](https://github.com/TyberiusPrime/dppd_plotnine)
 
 

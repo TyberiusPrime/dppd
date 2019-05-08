@@ -4,8 +4,8 @@ The why of dppd
 Undoubtly, in R dplyr is a highly useful library
 since many of it's verbs are not available otherwise.
 
-But pandas, which has been moving to support `method
-chaining<https://tomaugspurger.github.io/method-chaining.html>` in the last few releases
+But pandas, which has been moving to support `method chaining <https://tomaugspurger.github.io/method-chaining.html>`_
+in the last few releases
 already does most of dplyr's verbs, so why is there half a dozen 
 dplyr clones for python, including this one (see <comparison>)?
 
