@@ -7,7 +7,7 @@ unreleased
 ==========
 
 
-0.18 
+0.19 
 ==========
 
 8 support for itertuples on groupBy objects
