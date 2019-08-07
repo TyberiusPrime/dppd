@@ -870,7 +870,7 @@ def test_as_type_kwargs():
 
 def test_categorize():
     df = pd.DataFrame(
-        {"a": ["hello", "hello", "world"], "b": ["another", "category", "level"]}
+        {"a": ["hello", "hello", "world"], "b": ["zanother", "category", "level"]}
     )
     actual = dp(df).categorize("a").pd
     actual2 = dp(df).categorize().pd
@@ -878,6 +878,7 @@ def test_categorize():
     assert not isinstance(actual["b"].dtype, pd.api.types.CategoricalDtype)
     assert isinstance(actual2["a"].dtype, pd.api.types.CategoricalDtype)
     assert isinstance(actual2["b"].dtype, pd.api.types.CategoricalDtype)
+    assert list(actual2["b"].cat.categories) == ["zanother", "category", "level"]
     actual3 = (
         dp(df).categorize(None, ["hello", "world", "another", "category", "level"]).pd
     )
