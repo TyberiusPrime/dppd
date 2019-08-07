@@ -812,12 +812,26 @@ def astype_DataFrame(df, columns, dtype, **kwargs):
     return df.assign(**{x: df[x].astype(dtype, **kwargs) for x in columns})
 
 
+use_df_order = object()
+
+
+def unique_in_order(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
+
+
 @register_verb("categorize", types=pd.DataFrame)
-def categorize_DataFrame(df, columns=None, categories=None, ordered=None):
+def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None):
     columns = parse_column_specification(df, columns, return_list=True)
-    df = mutate_DataFrame(
-        df, **{c: pd.Categorical(df[c], categories, ordered) for c in columns}
-    )
+    if categories is use_df_order:
+        new = {}
+        for c in columns:
+            new[c] = pd.Categorical(df[c], unique_in_order(df[c]), ordered)
+    else:
+        new = {c: pd.Categorical(df[c], categories, ordered) for c in columns}
+
+    df = mutate_DataFrame(df, **new)
     return df
 
 

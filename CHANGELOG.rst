@@ -6,10 +6,16 @@ Changelog
 unreleased
 ==========
 
-- support for itertuples on groupBy objects
+
+0.18 
+==========
+
+8 support for itertuples on groupBy objects
 - column specs now support types (and forward the query to select_dtypes)
 - column spec now accepts [True] as 'same columns, but sorted alphabetically'
 - ends() for DataFrames
+- categorize now by default keeps order as seen in the Series. Pass None to restore old
+  behaviour
 
 
 0.17
