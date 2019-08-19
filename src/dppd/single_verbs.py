@@ -806,7 +806,7 @@ def natsort_DataFrame(df, column):
     return df.reindex(index=order_by_index(df.index, index_natsorted(df[column])))
 
 
-@register_verb("astype", types=pd.DataFrame)
+@register_verb(["astype", 'as_type'], types=pd.DataFrame)
 def astype_DataFrame(df, columns, dtype, **kwargs):
     columns = parse_column_specification(df, columns, return_list=True)
     return df.assign(**{x: df[x].astype(dtype, **kwargs) for x in columns})
@@ -832,6 +832,28 @@ def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None
         new = {c: pd.Categorical(df[c], categories, ordered) for c in columns}
 
     df = mutate_DataFrame(df, **new)
+    return df
+
+@register_verb("reset_columns", types=pd.DataFrame)
+def reset_columns_DataFrame(df, new_columns=None):
+    """
+    new_columns:
+        None:
+            df.columns = list(df.columns)
+        List:
+            df.columns =  new_columns
+        callable:
+            df.columns = [new_columns(x) for x in df.columns]
+    useful when you were transposing categorical indices and now can no longer assign columns.
+    (Arguably a pandas bug)
+    """
+    if new_columns is None:
+        df.columns = list(df.columns)
+    elif isinstance(new_columns, list):
+        df.columns = new_columns
+    else:
+        df.columns = [new_columns(x) for x in df.columns]
+
     return df
 
 
