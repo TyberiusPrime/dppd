@@ -337,3 +337,14 @@ def test_dir():
     print(sorted(delta))
     assert not len(delta)
     assert len(actual) > len(should_min)
+
+
+def test_version_is_correct():
+    import configparser
+    from pathlib import Path
+    import dppd as org_dppd
+
+    c = configparser.ConfigParser()
+    c.read(Path(__file__).parent.parent / "setup.cfg")
+    version = c["metadata"]["version"]
+    assert version == org_dppd.__version__
