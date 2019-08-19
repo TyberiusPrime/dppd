@@ -919,3 +919,23 @@ def test_natsort():
     df = pd.DataFrame({"a": ["1", "16", "2"], "b": ["another", "category", "level"]})
     df = dp(df).natsort("a").pd
     assert (df["a"] == ["1", "2", "16"]).all()
+
+
+def test_reset_column():
+    df = pd.DataFrame({"a": ["1", "16", "2"], "b": ["another", "category", "level"]})
+    df.columns = pd.Categorical(df.columns)
+    assert isinstance(df.columns, pd.CategoricalIndex)
+    df = dp(df).reset_columns().pd
+    assert not isinstance(df.columns, pd.CategoricalIndex)
+
+    df.columns = pd.Categorical(df.columns)
+    assert isinstance(df.columns, pd.CategoricalIndex)
+    df = dp(df).reset_columns(["x", "y"]).pd
+    assert not isinstance(df.columns, pd.CategoricalIndex)
+    assert df.columns[0] == "x"
+
+    df.columns = pd.Categorical(df.columns)
+    assert isinstance(df.columns, pd.CategoricalIndex)
+    df = dp(df).reset_columns(str.upper).pd
+    assert not isinstance(df.columns, pd.CategoricalIndex)
+    assert df.columns[0] == "X"

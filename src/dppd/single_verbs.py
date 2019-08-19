@@ -806,7 +806,7 @@ def natsort_DataFrame(df, column):
     return df.reindex(index=order_by_index(df.index, index_natsorted(df[column])))
 
 
-@register_verb(["astype", 'as_type'], types=pd.DataFrame)
+@register_verb(["astype", "as_type"], types=pd.DataFrame)
 def astype_DataFrame(df, columns, dtype, **kwargs):
     columns = parse_column_specification(df, columns, return_list=True)
     return df.assign(**{x: df[x].astype(dtype, **kwargs) for x in columns})
@@ -833,6 +833,7 @@ def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None
 
     df = mutate_DataFrame(df, **new)
     return df
+
 
 @register_verb("reset_columns", types=pd.DataFrame)
 def reset_columns_DataFrame(df, new_columns=None):
