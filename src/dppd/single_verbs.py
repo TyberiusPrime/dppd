@@ -119,7 +119,7 @@ def select_DataFrame(df, columns):
     colummns : column specifiation or dict
         * column specification, see :func:`dppd.single_verbs.parse_column_specification`
         * dict {new_name: 'old_name'} - select and rename. old_name may be a str, or a
-          :class:`Series <pd.Series>` (in which case
+          :class:`Series <pd.Series>` (in which case the .name attribute is used)
     """
 
     if isinstance(columns, dict):
@@ -863,5 +863,19 @@ def ends(df, n=5):
     """Head(n)&Tail(n) at once"""
     return df.iloc[np.r_[0:n, -n:0]]
 
+
+@register_verb("rename_columns", types=pd.DataFrame)
+def rename_columns(df, rename_function_or_list):
+    """Rename *all* columns in a dataframe (and return a copy)- 
+    either by assigning df.columns = rename_function_or_list
+     or by dfy.columns = [rename_function_or_list(x) for x in df.columns]
+    """
+    if hasattr(rename_function_or_list, '__call__'):
+        cols = [rename_function_or_list(x) for x in df.columns]
+    else:
+        cols = rename_function_or_list
+    res = df.copy()
+    res.columns = cols
+    return res
 
 # dply aliases
