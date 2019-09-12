@@ -137,3 +137,19 @@ Example:
          by our verb :meth:`select <dppd.single_verbs.select>`.
 
 .. [#f2] 'drop' is already a pandas method name - :meth:`pandas.DataFrame.drop`
+
+
+categorize
+----------------
+Turn columns into pandas.Categoricals. 
+Default categories are unique values in the order they appear in the dataframe.
+Pass None to use sorted unique values (ie. pandas.Categorical default behaviour).
+
+
+rename_columns
+---------------
+Wraps df.columns = ... into an inline call.
+
+
+
+
