@@ -911,7 +911,7 @@ def test_iter_tuples_in_group_by():
     actual = {k: list(v) for (k, v) in dp(mtcars).groupby("cyl").itertuples()}
     should = {}
     for key, sub_df in mtcars.groupby("cyl"):
-        should[key, ] = list(sub_df.itertuples())
+        should[key,] = list(sub_df.itertuples())
     assert actual == should
 
 
@@ -939,3 +939,11 @@ def test_reset_column():
     df = dp(df).reset_columns(str.upper).pd
     assert not isinstance(df.columns, pd.CategoricalIndex)
     assert df.columns[0] == "X"
+
+
+def test_rename_columns():
+    df = pd.DataFrame({"a": ["1", "16", "2"], "b": ["another", "category", "level"]})
+    df2 = dp(df).rename_columns(str.upper).pd
+    assert (df2.columns == ["A", "B"]).all()
+    df3 = dp(df).rename_columns(["c", "d"]).pd
+    assert (df3.columns == ["c", "d"]).all()

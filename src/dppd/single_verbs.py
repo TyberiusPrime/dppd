@@ -823,6 +823,8 @@ def unique_in_order(seq):
 
 @register_verb("categorize", types=pd.DataFrame)
 def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None):
+    """Turn columns into pandas.Categorical
+    """
     columns = parse_column_specification(df, columns, return_list=True)
     if categories is use_df_order:
         new = {}
@@ -835,18 +837,21 @@ def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None
     return df
 
 
-@register_verb("reset_columns", types=pd.DataFrame)
+@register_verb(["reset_columns", "rename_columns"], types=pd.DataFrame)
 def reset_columns_DataFrame(df, new_columns=None):
     """
-    new_columns:
+    Rename *all* columns in a dataframe (and return a copy).
+    Possible new_columns values:
         None:
             df.columns = list(df.columns)
         List:
             df.columns =  new_columns
         callable:
             df.columns = [new_columns(x) for x in df.columns]
-    useful when you were transposing categorical indices and now can no longer assign columns.
-    (Arguably a pandas bug)
+
+    new_columns=None is useful when you were transposing categorical indices and
+    now can no longer assign columns.  (Arguably a pandas bug)
+
     """
     if new_columns is None:
         df.columns = list(df.columns)
@@ -861,21 +866,4 @@ def reset_columns_DataFrame(df, new_columns=None):
 @register_verb("ends", types=pd.DataFrame)
 def ends(df, n=5):
     """Head(n)&Tail(n) at once"""
-    return df.iloc[np.r_[0:n, -n:0]]
-
-
-@register_verb("rename_columns", types=pd.DataFrame)
-def rename_columns(df, rename_function_or_list):
-    """Rename *all* columns in a dataframe (and return a copy)- 
-    either by assigning df.columns = rename_function_or_list
-     or by dfy.columns = [rename_function_or_list(x) for x in df.columns]
-    """
-    if hasattr(rename_function_or_list, '__call__'):
-        cols = [rename_function_or_list(x) for x in df.columns]
-    else:
-        cols = rename_function_or_list
-    res = df.copy()
-    res.columns = cols
-    return res
-
-# dply aliases
+    return df.iloc[np.r_[0:n, -n:0]]  # noqa: E213
