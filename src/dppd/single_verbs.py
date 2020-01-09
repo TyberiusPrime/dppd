@@ -730,7 +730,10 @@ def seperate(df, column, new_names, sep=".", remove=False):
     column = parse_column_specification(df, column, return_list=True)
     if len(column) != 1:
         raise ValueError("Must pass in exactly one column")
-    s = df[column[0]].str.split(sep, expand=True)
+    c = df[column[0]]
+    if isinstance(c, pd.DataFrame):
+        raise ValueError("Multiple columns with the same name - don't know which one to pick")
+    s = c.str.split(sep, expand=True)
     s.columns = new_names
     s.index = df.index
     if remove:
