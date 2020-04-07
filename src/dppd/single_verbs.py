@@ -855,7 +855,7 @@ def reset_columns_DataFrame(df, new_columns=None):
     """
     if new_columns is None:
         df.columns = list(df.columns)
-    elif isinstance(new_columns, list):
+    elif isinstance(new_columns, list) or isinstance(new_columns, pd.MultiIndex):
         df.columns = new_columns
     else:
         df.columns = [new_columns(x) for x in df.columns]
