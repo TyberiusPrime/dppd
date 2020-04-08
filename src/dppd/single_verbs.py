@@ -848,6 +848,9 @@ def reset_columns_DataFrame(df, new_columns=None):
             df.columns =  new_columns
         callable:
             df.columns = [new_columns(x) for x in df.columns]
+        str && df.shape[1] == 1:
+            df.columns = [new_columns]
+
 
     new_columns=None is useful when you were transposing categorical indices and
     now can no longer assign columns.  (Arguably a pandas bug)
@@ -857,6 +860,11 @@ def reset_columns_DataFrame(df, new_columns=None):
         df.columns = list(df.columns)
     elif isinstance(new_columns, list) or isinstance(new_columns, pd.MultiIndex):
         df.columns = new_columns
+    elif isinstance(new_columns, str):
+        if df.shape[1] == 1:
+            df.columns = [new_columns]
+        else:
+            raise ValueError("Single string only supported for dfs with 1 column")
     else:
         df.columns = [new_columns(x) for x in df.columns]
 
