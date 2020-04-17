@@ -66,6 +66,11 @@ def _dir(obj):
     print(dir(obj))
     return obj
 
+@register_verb(name="display", types=None)
+def _display(obj):
+    display(obj)
+    return obj
+
 
 @register_verb("ungroup", types=[DataFrameGroupBy])
 def ungroup_DataFrameGroupBy(grp):
@@ -875,3 +880,31 @@ def reset_columns_DataFrame(df, new_columns=None):
 def ends(df, n=5):
     """Head(n)&Tail(n) at once"""
     return df.iloc[np.r_[0:n, -n:0]]  # noqa: E213
+
+
+@register_verb("binarize", types=pd.DataFrame)
+def binarize(df, col_spec, drop=True):
+    """Convert categorical columns into 
+    'regression columns', i.e. X with values a,b,c becomes
+    three binary columns X-a, X-b, X-c which are True exactly
+    where X was a, etc.
+    """
+    cols = parse_column_specification(df, col_spec, return_list=True)
+    if drop:
+        out = [df.drop(cols, axis=1)]
+    else:
+        out = [df]
+    for c in cols:
+        levels = df[c].cat.categories
+        here = {}
+        for l in levels:
+            name = "%s-%s"% (c, l)
+            here[name] = df[c] == l
+        out.append(pd.DataFrame(here))
+    return pd.concat(out,axis=1)
+
+@register_verb("to_frame", types=dict)
+def to_frame_dict(d):
+    """pd.DataFrame(d) for dicts"""
+    return pd.DataFrame(d)
+
