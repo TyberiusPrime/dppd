@@ -66,9 +66,10 @@ def _dir(obj):
     print(dir(obj))
     return obj
 
+
 @register_verb(name="display", types=None)
-def _display(obj):
-    display(obj)
+def _display(obj):  # pragma: no cover
+    display(obj)  # noqa: F821 - Jupyter only, needs to import.
     return obj
 
 
@@ -737,7 +738,9 @@ def seperate(df, column, new_names, sep=".", remove=False):
         raise ValueError("Must pass in exactly one column")
     c = df[column[0]]
     if isinstance(c, pd.DataFrame):
-        raise ValueError("Multiple columns with the same name - don't know which one to pick")
+        raise ValueError(
+            "Multiple columns with the same name - don't know which one to pick"
+        )
     s = c.str.split(sep, expand=True)
     s.columns = new_names
     s.index = df.index
@@ -887,7 +890,7 @@ def ends(df, n=5):
 
 @register_verb("binarize", types=pd.DataFrame)
 def binarize(df, col_spec, drop=True):
-    """Convert categorical columns into 
+    """Convert categorical columns into
     'regression columns', i.e. X with values a,b,c becomes
     three binary columns X-a, X-b, X-c which are True exactly
     where X was a, etc.
@@ -901,13 +904,14 @@ def binarize(df, col_spec, drop=True):
         levels = df[c].cat.categories
         here = {}
         for l in levels:
-            name = "%s-%s"% (c, l)
+            name = "%s-%s" % (c, l)
             here[name] = df[c] == l
         out.append(pd.DataFrame(here))
-    return pd.concat(out,axis=1)
+    return pd.concat(out, axis=1)
+
 
 @register_verb("to_frame", types=dict)
-def to_frame_dict(d):
-    """pd.DataFrame(d) for dicts"""
-    return pd.DataFrame(d)
-
+def to_frame_dict(d, **kwargs):
+    """pd.DataFrame.from_dict(d, **kwargs),
+    so you can say dp({}).to_frame()"""
+    return pd.DataFrame.from_dict(d, **kwargs)

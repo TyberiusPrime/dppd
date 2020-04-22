@@ -818,7 +818,7 @@ def test__lenght_of_series():
 def test_grouped_mutate_X_apply():
     actual = dp(mtcars).groupby("cyl").mutate(count=X.apply(len)).ungroup().pd
     should = dp(mtcars).groupby("cyl").add_count().ungroup().pd
-    assert_frame_equal(should, actual, check_column_order=False)
+    assert_frame_equal(should, actual, check_column_order=False, check_dtype=False)
 
 
 def test_grouped_mutate_X_apply_str():
@@ -941,9 +941,55 @@ def test_reset_column():
     assert df.columns[0] == "X"
 
 
+def test_reset_columns_single_column_str():
+    df = pd.DataFrame({"a": [1]})
+    actual = dp(df).reset_columns("b").pd
+    assert actual.columns == ["b"]
+    with pytest.raises(ValueError):
+        dp(pd.DataFrame({"a": [1], "b": [1]})).reset_columns("b").pd
+
+
 def test_rename_columns():
     df = pd.DataFrame({"a": ["1", "16", "2"], "b": ["another", "category", "level"]})
     df2 = dp(df).rename_columns(str.upper).pd
     assert (df2.columns == ["A", "B"]).all()
     df3 = dp(df).rename_columns(["c", "d"]).pd
     assert (df3.columns == ["c", "d"]).all()
+
+
+def test_binarize():
+    df = pd.DataFrame({"x": [1, 2, 3], "group": ["a", "a", "b"]})
+    actual = dp(df).categorize("group").binarize("group").pd
+    should = pd.DataFrame(
+        {
+            "x": [1, 2, 3],
+            "group-a": [True, True, False],
+            "group-b": [False, False, True],
+        }
+    )
+    assert_frame_equal(should, actual)
+
+
+def test_binarize_no_drop():
+    df = pd.DataFrame({"x": [1, 2, 3], "group": ["a", "a", "b"]})
+    actual = dp(df).categorize("group").binarize("group", drop=False).pd
+    should = pd.DataFrame(
+        {
+            "x": [1, 2, 3],
+            "group": pd.Categorical(["a", "a", "b"]),
+            "group-a": [True, True, False],
+            "group-b": [False, False, True],
+        }
+    )
+    assert_frame_equal(should, actual)
+
+
+def test_dataframe_from_dict():
+    actual = dp({"x": [1, 2, 3], "y": ["a", "b", "c"]}).to_frame().pd
+    should = pd.DataFrame({"x": [1, 2, 3], "y": ["a", "b", "c"]})
+    assert_frame_equal(actual, should)
+
+    actual = dp({'a': 1, 'b': 2}).to_frame(orient='index').pd
+    print(actual)
+    should = pd.DataFrame({0: [1,2]}, index=['a','b'])
+    assert_frame_equal(actual, should)
