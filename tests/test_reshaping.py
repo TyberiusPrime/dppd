@@ -143,10 +143,18 @@ def test_seperate_and_remove():
     assert "X" not in actual.columns
 
 
-def test_seperate_raises_on_Multip_column():
+def test_seperate_raises_on_multi_column_spec():
     df = pd.DataFrame({"X": [None, "a.b", "a.d", "b.c"], "Y": 5})
     with pytest.raises(ValueError):
         dp(df).seperate([X.X, X.Y], ["A", "B"])
+
+
+def test_seperate_raises_on_repeated_column():
+    df = pd.DataFrame({"X": [None, "a.b", "a.d", "b.c"], "Y": 5})
+    df = df.assign(x=df["X"])
+    df.columns = ["x", "y", "x"]
+    with pytest.raises(ValueError):
+        dp(df).seperate("x", ["A", "B"])
 
 
 def test_unite():
