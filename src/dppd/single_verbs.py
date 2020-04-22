@@ -853,14 +853,11 @@ def reset_columns_DataFrame(df, new_columns=None):
     """
     Rename *all* columns in a dataframe (and return a copy).
     Possible new_columns values:
-        None:
-            df.columns = list(df.columns)
-        List:
-            df.columns =  new_columns
-        callable:
-            df.columns = [new_columns(x) for x in df.columns]
-        str && df.shape[1] == 1:
-            df.columns = [new_columns]
+
+    - None: df.columns = list(df.columns)
+    - List: df.columns =  new_columns
+    - callable: df.columns = [new_columns(x) for x in df.columns]
+    - str && df.shape[1] == 1: df.columns = [new_columns]
 
 
     new_columns=None is useful when you were transposing categorical indices and
@@ -912,6 +909,6 @@ def binarize(df, col_spec, drop=True):
 
 @register_verb("to_frame", types=dict)
 def to_frame_dict(d, **kwargs):
-    """pd.DataFrame.from_dict(d, **kwargs),
-    so you can say dp({}).to_frame()"""
+    """``pd.DataFrame.from_dict(d, **kwargs)``,
+    so you can say ``dp({}).to_frame()``"""
     return pd.DataFrame.from_dict(d, **kwargs)

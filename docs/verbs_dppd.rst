@@ -145,11 +145,40 @@ Turn columns into pandas.Categoricals.
 Default categories are unique values in the order they appear in the dataframe.
 Pass None to use sorted unique values (ie. pandas.Categorical default behaviour).
 
-
-rename_columns
----------------
-Wraps df.columns = ... into an inline call.
-
+unique_in_order
+-----------------
+Does what it says on the tin.
 
 
 
+binarize
+----------------
+Convert categorical columns into 'regression columns', i.e. X with values a,b,c
+becomes three binary columns X-a, X-b, X-c which are True exactly where X was
+a, etc.
+
+
+
+rename_columns / reset_columns
+--------------------------------
+
+Wraps df.columns = ... into an inline call. Accepts either a list, a function,
+a callable (called once for each column with the old columnl, or a string (for
+single column dataframes).
+Also accepts None, which resets the columns to list(X.columns) (useful to work
+around a categorical-columns-can't-add-any bug).
+
+
+ends 
+------
+heads and tails at once.
+
+
+natsort 
+------------
+
+Sort via the `natsort package <https://pypi.org/project/natsort/>`_.
+
+display
+------------
+call display(X) - for inline display in jupyter notebooks.
