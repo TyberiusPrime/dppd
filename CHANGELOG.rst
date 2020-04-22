@@ -6,11 +6,25 @@ Changelog
 unreleased
 ==========
 
+0.22
+=====
+- added binarize
+- added dp({}).to_frame()
+- minor bugfixes and polishing
+- improved docs a bit
 
-0.19 
+0.21
+=====
+- Fleshed out reset_columns
+
+0.20
+====
+- added rename_columns/reset_columns
+
+0.19
 ==========
 
-8 support for itertuples on groupBy objects
+- support for itertuples on groupBy objects
 - column specs now support types (and forward the query to select_dtypes)
 - column spec now accepts [True] as 'same columns, but sorted alphabetically'
 - ends() for DataFrames
@@ -30,12 +44,12 @@ unreleased
 - replaced alias_verb by extending register_verb(name=...) to register_verb(names=[...], ...)
 - support for pandas 0.22.0 
 
-Version 0.15
+0.15
 ============
 - X is now 'stacked' - dp(...).pd now replaces the X with the one just before the last dp(..) call.
     
 
-Version 0.1
+0.1
 ===========
 
 - initial release

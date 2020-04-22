@@ -73,6 +73,7 @@ script:
     elif [[ "$JOB" == "DOCS" ]]; then
       # low pandoc version leads to a warning so
       # SPHINXOPTS=-W fails
+      cd docs && make html
       python setup.py docs
     fi
 
