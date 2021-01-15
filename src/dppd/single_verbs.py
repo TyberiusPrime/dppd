@@ -456,8 +456,7 @@ def filter_by(obj, filter_arg):
 
 @register_verb("add_count", types=[pd.DataFrame, DataFrameGroupBy])
 def add_count(df):
-    """Verb: Add the cardinality of a row's group to the row as column 'count'
-    """
+    """Verb: Add the cardinality of a row's group to the row as column 'count'"""
     from .base import dppd
 
     with dppd(df) as (dp, X):
@@ -834,8 +833,7 @@ def unique_in_order(seq):
 
 @register_verb("categorize", types=pd.DataFrame)
 def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None):
-    """Turn columns into pandas.Categorical
-    """
+    """Turn columns into pandas.Categorical"""
     columns = parse_column_specification(df, columns, return_list=True)
     if categories is use_df_order:
         new = {}
@@ -912,3 +910,33 @@ def to_frame_dict(d, **kwargs):
     """``pd.DataFrame.from_dict(d, **kwargs)``,
     so you can say ``dp({}).to_frame()``"""
     return pd.DataFrame.from_dict(d, **kwargs)
+
+
+@register_verb("norm_0_to_1", types=pd.DataFrame)
+def norm_0_to_1(df, axis=1):
+    """Normalize a (numeric) data frame so that
+    it goes from 0 to 1 in each row (axis=1) or column (axis=0)
+    Usefully for PCA, correlation, etc. because then
+    the dimensions are comparable in size"""
+    if axis == 1:
+        a1 = 1
+        a2 = 0
+    else:
+        a1 = 0
+        a2 = 1
+    df_normed = df.sub(df.min(axis=a1), axis=a2)
+    df_normed = df.div(df.max(axis=a1), axis=a2)
+    return df_normed
+
+
+@register_verb("log2", types=pd.DataFrame)
+def log2(df):
+    df = df.select_dtypes(np.number)
+    res = {c: np.log2(df[c]) for c in df.columns}
+    return pd.DataFrame(res, index=df.index)
+
+@register_verb('zcore', types=pd.DataFrame)
+def norm_zscore(df, axis=1):
+    """apply zcore transform (X - mu) / std via scipy.stats.zcore an the given axis"""
+    return pd.DataFrame(scipy.stats.zscore(df, axis=1), columns=df.columns, index=df.index)
+
