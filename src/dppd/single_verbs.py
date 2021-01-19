@@ -935,8 +935,26 @@ def log2(df):
     res = {c: np.log2(df[c]) for c in df.columns}
     return pd.DataFrame(res, index=df.index)
 
-@register_verb('zcore', types=pd.DataFrame)
+
+@register_verb("zscore", types=pd.DataFrame)
 def norm_zscore(df, axis=1):
     """apply zcore transform (X - mu) / std via scipy.stats.zcore an the given axis"""
-    return pd.DataFrame(scipy.stats.zscore(df, axis=1), columns=df.columns, index=df.index)
+    return pd.DataFrame(
+        scipy.stats.zscore(df, axis=1), columns=df.columns, index=df.index
+    )
 
+
+@register_verb("colspec", types=pd.DataFrame)
+def colspec_DataFrame(df, columns, invert=False):
+    """Return columns as defined by your column specification, so you can use
+    colspec in set_index etc
+
+        * column specification, see :func:`dppd.single_verbs.parse_column_specification`
+    """
+    res = parse_column_specification(
+        df, columns, return_list=True
+    )  # we want to keep the order if the user passed one in
+    if not invert:
+        return res
+    else:
+        return [x for x in df.columns if x not in res]
