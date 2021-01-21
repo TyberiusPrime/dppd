@@ -833,12 +833,21 @@ def unique_in_order(seq):
 
 @register_verb("categorize", types=pd.DataFrame)
 def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None):
-    """Turn columns into pandas.Categorical"""
+    """Turn columns into pandas.Categorical.
+    By default, they get ordered by their occurances in the column.
+    You can pass False, then pd.Categorical will sort alphabetically,
+    or 'nastorted', in which case they'll be passed through natsort.natsorted
+    """
     columns = parse_column_specification(df, columns, return_list=True)
     if categories is use_df_order:
         new = {}
         for c in columns:
             new[c] = pd.Categorical(df[c], unique_in_order(df[c]), ordered)
+    elif categories == 'natsorted':
+        import natsort
+        new = {}
+        for c in columns:
+            new[c] = pd.Categorical(df[c], natsort.natsorted(df[c].unique()), ordered)
     else:
         new = {c: pd.Categorical(df[c], categories, ordered) for c in columns}
 
