@@ -843,7 +843,7 @@ def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None
         new = {}
         for c in columns:
             new[c] = pd.Categorical(df[c], unique_in_order(df[c]), ordered)
-    elif categories == 'natsorted':
+    elif isinstance(categories, str) and categories == 'natsorted':
         import natsort
         new = {}
         for c in columns:
