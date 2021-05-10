@@ -843,8 +843,9 @@ def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None
         new = {}
         for c in columns:
             new[c] = pd.Categorical(df[c], unique_in_order(df[c]), ordered)
-    elif categories == 'natsorted':
+    elif categories == "natsorted":
         import natsort
+
         new = {}
         for c in columns:
             new[c] = pd.Categorical(df[c], natsort.natsorted(df[c].unique()), ordered)
@@ -967,3 +968,25 @@ def colspec_DataFrame(df, columns, invert=False):
         return res
     else:
         return [x for x in df.columns if x not in res]
+
+
+@register_verb("pca", types=pd.DataFrame)
+def pca_dataframe(df, whiten=False, random_state=None):
+    """Perform 2 component PCA using sklearn.decomposition.PCA.
+    Expects samples in rows!
+    Returns a tuple (DataFrame{sample, 1st, 2nd},
+    whith an additiona l, explained_variance_ratio_ attribute
+    """
+    from sklearn.decomposition import PCA
+    import warnings
+
+    p = PCA(n_components=2, whiten=whiten, random_state=random_state)
+    df_fit = pd.DataFrame(p.fit_transform(df))
+    df_fit.columns = ["1st", "2nd"]
+    df_fit.index = df.index
+    df_fit.index.name = "sample"
+    df_fit = df_fit.reset_index()
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        df_fit.explained_variance_ratio_ = p.explained_variance_ratio_
+    return df_fit
