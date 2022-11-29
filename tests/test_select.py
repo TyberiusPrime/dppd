@@ -148,7 +148,7 @@ def test_unselect_columns_str_operation():
 
 
 def test_select_renaming():
-    actual = dp(mtcars).select({"nn": "name", "HP": X.hp}).pd
+    actual = dp(mtcars).select_and_rename({"nn": "name", "HP": X.hp}).pd
     should = mtcars[["name", "hp"]].rename(columns={"name": "nn", "hp": "HP"})
     assert_frame_equal(actual, should)
 
@@ -360,3 +360,45 @@ def test_select_None_return_bool_vec():
 def test_select_sort():
     actual = dp(mtcars).select([True])
     assert (actual.columns == sorted(mtcars.columns)).all()
+
+
+def test_select_regexps_multi_level():
+    df = pd.DataFrame(
+        {
+            ("a", "X"): [1, 2, 3],
+            ("b", "Y"): [4, 5, 6],
+            ("c", "Z"): [7, 8, 9],
+            ("d", "A"): [10, 11, 12],
+        }
+    )
+    actual = dp(df).select(("a|b",)).pd
+    assert actual.columns.to_list() == [("a", "X"), ("b", "Y")]
+
+    actual = dp(df).select((None, "X|A")).pd
+    assert actual.columns.to_list() == [("a", "X"), ("d", "A")]
+
+    actual = dp(df).select(("a", "X|Y")).pd
+    assert actual.columns.to_list() == [("a", "X")]
+
+
+def test_select_regexps_dict():
+    df = pd.DataFrame(
+        {
+            ("a", "X"): [1, 2, 3],
+            ("b", "Y"): [4, 5, 6],
+            ("c", "Z"): [7, 8, 9],
+            ("d", "A"): [10, 11, 12],
+        }
+    )
+    df.columns.names = ["hello", "goodbye"]
+    actual = dp(df).select({"hello": "a|b"}).pd
+    assert actual.columns.to_list() == [("a", "X"), ("b", "Y")]
+
+    with pytest.raises(KeyError):
+        actual = dp(df).select({"goodby": "X|A"}).pd
+    actual = dp(df).select({"goodbye": "X|A"}).pd
+    assert actual.columns.to_list() == [("a", "X"), ("d", "A")]
+
+    actual = dp(df).select({"goodbye": "X|Y", "hello": "a"}).pd
+    actual = dp(df).select(("a", "X|Y")).pd
+    assert actual.columns.to_list() == [("a", "X")]
