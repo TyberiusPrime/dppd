@@ -589,8 +589,8 @@ def test_summary_quantiles():
     ]
     actual = dp(mtcars).sort_values("cyl").groupby("cyl").summarise(*args).pd
     lambdas = [lambda x, q=q: x.quantile(q) for q in np.arange(0, 1.1, 0.1)]
-    for l, q in zip(lambdas, np.arange(0, 1.1, 0.1)):
-        l.__name__ = "q%.2f" % q
+    for ll, q in zip(lambdas, np.arange(0, 1.1, 0.1)):
+        ll.__name__ = "q%.2f" % q
     should = (
         mtcars.sort_values("cyl")
         .groupby("cyl")["disp"]
