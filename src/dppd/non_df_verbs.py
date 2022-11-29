@@ -1,4 +1,4 @@
-from .base import register_verb, register_type_methods_as_verbs
+from .base import register_verb  # , register_type_methods_as_verbs
 import pandas as pd
 import collections
 

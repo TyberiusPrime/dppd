@@ -123,8 +123,23 @@ def select_DataFrame(df, columns):
     Parameters
     ----------
     colummns : column specifiation or dict
-        * column specification, see :func:`dppd.single_verbs.parse_column_specification`
-        * dict {new_name: 'old_name'} - select and rename. old_name may be a str, or a
+         see :func:`dppd.single_verbs.parse_column_specification`
+
+    (for the previous 'rename on dict' behaviour, see select_and_rename
+    """
+    columns = parse_column_specification(
+        df, columns, return_list=True
+    )  # we want to keep the order if the user passed one in
+    return df.loc[:, columns]
+
+
+@register_verb("select_and_rename", types=[pd.DataFrame])
+def select_and_rename_DataFrame(df, columns):
+    """Verb: Pick columns from a DataFrame, and rename them in the process
+
+    Parameters
+    ----------
+        columns:  dict {new_name: 'old_name'} - select and rename. old_name may be a str, or a
           :class:`Series <pd.Series>` (in which case the .name attribute is used)
     """
 
@@ -137,10 +152,7 @@ def select_DataFrame(df, columns):
         result = result.rename(columns=columns)
         return result
     else:
-        columns = parse_column_specification(
-            df, columns, return_list=True
-        )  # we want to keep the order if the user passed one in
-        return df.loc[:, columns]
+        raise TypeError("Not a dict")
 
 
 @register_verb("select", types=[DataFrameGroupBy])
@@ -843,7 +855,7 @@ def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None
         new = {}
         for c in columns:
             new[c] = pd.Categorical(df[c], unique_in_order(df[c]), ordered)
-    elif isinstance(categories, str) and categories in ('natsorted', 'natsort'):
+    elif isinstance(categories, str) and categories in ("natsorted", "natsort"):
         import natsort
 
         new = {}
@@ -908,9 +920,9 @@ def binarize(df, col_spec, drop=True):
     for c in cols:
         levels = df[c].cat.categories
         here = {}
-        for l in levels:
-            name = "%s-%s" % (c, l)
-            here[name] = df[c] == l
+        for ll in levels:
+            name = "%s-%s" % (c, ll)
+            here[name] = df[c] == ll
         out.append(pd.DataFrame(here))
     return pd.concat(out, axis=1)
 
@@ -949,6 +961,7 @@ def log2(df):
 @register_verb("zscore", types=pd.DataFrame)
 def norm_zscore(df, axis=1):
     """apply zcore transform (X - mu) / std via scipy.stats.zcore an the given axis"""
+    import scipy.stats
     return pd.DataFrame(
         scipy.stats.zscore(df, axis=1), columns=df.columns, index=df.index
     )

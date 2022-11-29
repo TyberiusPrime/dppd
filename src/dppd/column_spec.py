@@ -16,14 +16,38 @@ def _parse_column_spec_return_from_bool_vector(df_columns, vector, return_list):
         return vector
 
 
-def _parse_column_spec_regexps_search(df_columns, regexps_list):
+def _parse_column_spec_regexps_search_single_level(df_columns, regexps_list):
     chosen = np.zeros(len(df_columns), bool)
-    for r in regexps_list:
+    for r in regexps_list:  #
         r = re.compile(r)
         for ii, c in enumerate(df_columns):
             if r.search(c):
                 chosen[ii] = True
     return chosen
+
+
+def _parse_column_spec_regexps_search_multiple_levels(df_columns, regexps_list):
+    level_count = len(df_columns.levels)
+    while len(regexps_list) < level_count:
+        regexps_list.append(None)
+
+    chosen = np.zeros(
+        (
+            len(df_columns),
+            level_count,
+        ),
+        bool,
+    )
+    for ii in range(0, level_count):
+        rr = regexps_list[ii]
+        if rr is None:
+            chosen[:, ii] = True
+        else:
+            rr = re.compile(rr)
+            for yy, c in enumerate(df_columns):
+                if rr.search(c[ii]):
+                    chosen[yy, ii] = True
+    return chosen.all(axis=1)
 
 
 def _parse_column_spec_from_strings(df_columns, column_spec, return_list):
@@ -96,6 +120,8 @@ def parse_column_specification(df, column_spec, return_list=False):
             * "-column_name" or ["-column_name1","-column_name2"]: drop all other columns (or invert search order in arrange)
             * pd.Index - interpreted as a list of column names - example: select(X.select_dtypes(int).columns)
             * (regexps_str, ) tuple - run re.search() on each column name
+            * (regexps_str, None, regexps_str ) tuple - run re.search() on each level of the column names. Logical and (like DataFrame.xs but more so).
+            * {level: regexs_str,...) - re.search on these levels (logical and)
             * a callable f, which takes a string column name and returns a bool whether to include the column.
             * a type, in which case the request will be forwarded to pandas.DataFrame.select_dtypes(include=...)). Example: numpy.number
             * None -> all columns
@@ -119,7 +145,34 @@ def parse_column_specification(df, column_spec, return_list=False):
     ) and column_spec.dtype == bool:
         result = column_spec
     elif isinstance(column_spec, tuple):
-        result = _parse_column_spec_regexps_search(df_columns, column_spec)
+        if not hasattr(df_columns, "levels"):
+            if len(column_spec) > 1:
+                raise ValueError(
+                    "DataFrame has no levels on it's columns, but you passed in more than one regexps"
+                )
+            result = _parse_column_spec_regexps_search_single_level(
+                df_columns, column_spec
+            )
+        else:
+            result = _parse_column_spec_regexps_search_multiple_levels(
+                df_columns, list(column_spec)
+            )
+    elif isinstance(column_spec, dict):
+        if not hasattr(df_columns, "levels"):
+            raise ValueError("DataFrame has no levels on it's columns. Perhaps you meant select_and_rename?")
+        for k in column_spec:
+            if not k in df_columns.names:
+                raise KeyError(
+                    f"{k} not in DataFrame.columns.names. Available {df_columns.names}"
+                )
+        # reuse the tuple engine
+        search_tuple = []
+        for k in df_columns.names:
+            search_tuple.append(column_spec.get(k, None))
+        result = _parse_column_spec_regexps_search_multiple_levels(
+            df_columns, list(search_tuple)
+        )
+
     elif isinstance(column_spec, type):
         ok = df.select_dtypes(column_spec).columns
         result = np.array([c in ok for c in df_columns], bool)
