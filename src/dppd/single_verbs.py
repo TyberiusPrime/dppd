@@ -180,11 +180,8 @@ def unselect_DataFrame(df, columns):
     colummns : column specifiation or dict
         * column specification, see :func:`dppd.single_verbs.parse_column_specification`
     """
-    if isinstance(columns, dict):
-        raise ValueError("unselect does not support renaming (passing a dict)")
-    else:
-        column_bool_vector = parse_column_specification(df, columns)
-        return df.loc[:, ~column_bool_vector]
+    column_bool_vector = parse_column_specification(df, columns)
+    return df.loc[:, ~column_bool_vector]
 
 
 @register_verb("unselect", types=[DataFrameGroupBy])
