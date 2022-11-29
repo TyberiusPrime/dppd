@@ -400,5 +400,6 @@ def test_select_regexps_dict():
     assert actual.columns.to_list() == [("a", "X"), ("d", "A")]
 
     actual = dp(df).select({"goodbye": "X|Y", "hello": "a"}).pd
-    actual = dp(df).select(("a", "X|Y")).pd
     assert actual.columns.to_list() == [("a", "X")]
+    actual = dp(df).unselect({"goodbye": "X|Y", "hello": "a"}).pd
+    assert actual.columns.to_list() == [("b", "Y"), ("c", "Z"), ("d", "A")]
