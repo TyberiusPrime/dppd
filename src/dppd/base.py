@@ -33,14 +33,14 @@ class register_verb:
                 this verb only applies to these types
             pass_dppd:
                 this func will get dppd instead of dppd.df (e.g. for dir)
-    """
+        """
         self.names = name
         if not isinstance(types, list):
             types = [types]
         self.types = types
         for t in types:
             dppd_types.add(t)
-            if not t in property_registry:
+            if t not in property_registry:
                 property_registry[t] = set()
         self.pass_dppd = pass_dppd
 
@@ -87,14 +87,13 @@ class register_verb:
 
 
 def register_property(name, types=None):
-    """Register a property/indexed accessor to be forwarded (.something[])
-    """
+    """Register a property/indexed accessor to be forwarded (.something[])"""
     if not isinstance(types, list):
         types = [types]
     for t in types:
         if (name, t) in verb_registry:
             warnings.warn("Property always shadowed by verb: %s" % name)
-        if not t in property_registry:
+        if t not in property_registry:
             property_registry[t] = set()
         property_registry[t].add(name)
         dppd_types.add(t)
@@ -139,7 +138,8 @@ class Dppd:
         if df is not None and type(df) not in dppd_types:
 
             raise ValueError(
-                f"Dppd was passed a {type(df)} for which no properties have been registered. That sounds like a bug"
+                f"Dppd was passed a {type(df)} for which no properties have "
+                "been registered. That sounds like a bug."
             )
         self.df = df
         self._dppd_proxy = dppd_proxy
@@ -211,8 +211,8 @@ class Dppd:
 class ReplacableProxy(wrapt.ObjectProxy):
     """A proxy that can change what it proxies for
 
-   :autodoc_skip:
-   """
+    :autodoc_skip:
+    """
 
     def _self_update_wrapped(self, w):
         self.__wrapped__ = w
@@ -235,7 +235,7 @@ class ReplacableProxy(wrapt.ObjectProxy):
 class DPPDAwareProxy(ReplacableProxy):
     """A replacable DataFrame proxy that also offers itergroups
 
-   :autodoc_skip:
+    :autodoc_skip:
     """
 
     def __init__(self, wrapped, dppd_proxy):
@@ -249,7 +249,7 @@ class DPPDAwareProxy(ReplacableProxy):
 class GetItemProxy(wrapt.ObjectProxy):
     """helper for accessor properties on DataFrames
 
-   :autodoc_skip:
+    :autodoc_skip:
     """
 
     def __init__(self, wrapped, dppd):
@@ -283,7 +283,8 @@ class dppd:
 
 
     Both X and dp are a proxyied DataFrame after the context manager.
-    They should work just like a DataFrame, use X.pd() to convert it into a true DataFrame.
+    They should work just like a DataFrame,
+    use X.pd() to convert it into a true DataFrame.
 
     Alternate usage::
 

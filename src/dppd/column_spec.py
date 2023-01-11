@@ -159,7 +159,9 @@ def parse_column_specification(df, column_spec, return_list=False):
             )
     elif isinstance(column_spec, dict):
         if not hasattr(df_columns, "levels"):
-            raise ValueError("DataFrame has no levels on it's columns. Perhaps you meant select_and_rename?")
+            raise ValueError(
+                "DataFrame has no levels on it's columns. Perhaps you meant select_and_rename?"
+            )
         for k in column_spec:
             if not k in df_columns.names:
                 raise KeyError(

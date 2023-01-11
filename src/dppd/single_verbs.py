@@ -959,6 +959,7 @@ def log2(df):
 def norm_zscore(df, axis=1):
     """apply zcore transform (X - mu) / std via scipy.stats.zcore an the given axis"""
     import scipy.stats
+
     return pd.DataFrame(
         scipy.stats.zscore(df, axis=1), columns=df.columns, index=df.index
     )
