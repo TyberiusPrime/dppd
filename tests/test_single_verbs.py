@@ -911,7 +911,9 @@ def test_iter_tuples_in_group_by():
     actual = {k: list(v) for (k, v) in dp(mtcars).groupby("cyl").itertuples()}
     should = {}
     for key, sub_df in mtcars.groupby("cyl"):
-        should[key,] = list(sub_df.itertuples())
+        should[
+            key,
+        ] = list(sub_df.itertuples())
     assert actual == should
 
 
@@ -989,7 +991,7 @@ def test_dataframe_from_dict():
     should = pd.DataFrame({"x": [1, 2, 3], "y": ["a", "b", "c"]})
     assert_frame_equal(actual, should)
 
-    actual = dp({'a': 1, 'b': 2}).to_frame(orient='index').pd
+    actual = dp({"a": 1, "b": 2}).to_frame(orient="index").pd
     print(actual)
-    should = pd.DataFrame({0: [1,2]}, index=['a','b'])
+    should = pd.DataFrame({0: [1, 2]}, index=["a", "b"])
     assert_frame_equal(actual, should)
