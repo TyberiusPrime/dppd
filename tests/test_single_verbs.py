@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import pandas.testing
 from plotnine.data import mtcars, diamonds
-from collections import OrderedDict
+from collections import OrderedDict, Counter
 
 assert_series_equal = pandas.testing.assert_series_equal
 
@@ -995,3 +995,11 @@ def test_dataframe_from_dict():
     print(actual)
     should = pd.DataFrame({0: [1, 2]}, index=["a", "b"])
     assert_frame_equal(actual, should)
+
+
+def test_dataframe_from_counter():
+    c = Counter("llama")
+    actual = dp(c).to_frame(key_name="X", count_name="Y").pd
+    actual = actual.sort_values("X").reset_index(drop=True)
+    should = pd.DataFrame({"X": ["a", "l", "m"], "Y": [2, 2, 1]})
+    assert_frame_equal(actual, should, )
