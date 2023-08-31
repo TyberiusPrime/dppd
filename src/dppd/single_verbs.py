@@ -52,12 +52,12 @@ def _print(obj):
     print(obj)
     return obj
 
+
 @register_verb(name="debug", types=None)
 def _debug(obj, k=5):
     d = obj.iloc[np.r_[0:k, -k:0]]
     print(d)
     return obj
-
 
 
 @register_verb(name="print_type", types=None)
@@ -531,7 +531,7 @@ def summarize(obj, *args):
     for idx, sub_df in it:
         if groups is not None:
             if isinstance(idx, tuple):
-                for (g, i) in zip(groups, idx):
+                for g, i in zip(groups, idx):
                     result[g].append(i)
             else:
                 result[groups[0]].append(idx)

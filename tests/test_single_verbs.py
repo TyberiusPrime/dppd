@@ -42,7 +42,7 @@ def test_ends():
     df = pd.DataFrame({"a": list(range(10))})
     actual = dp(df).ends(2).pd
     should = df.head(2)
-    should = should.append(df.tail(2))
+    should = pd.concat([should,df.tail(2)], axis=0)
     assert_frame_equal(should, actual)
 
 

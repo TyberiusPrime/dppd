@@ -5,7 +5,24 @@ Changelog
 
 unreleased
 ==========
-** added .debug to print head&tail inline
+
+0.25
+====
+
+- added .debug to print head&tail inline
+
+0.24
+===== 
+- allow dp(collections.Counter).to_frame(key_name='x', count_name='y').pd
+
+0.23 
+====
+
+- pca() on dataframe
+- 'natsorted' for categoricals
+- select_and_rename (select no longer renames!)
+- level selection in column specifications
+  (by passing in a list of regexps, might be shorter than the number of levels)
 
 0.22
 =====
