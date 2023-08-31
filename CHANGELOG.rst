@@ -5,6 +5,7 @@ Changelog
 
 unreleased
 ==========
+** added .debug to print head&tail inline
 
 0.22
 =====

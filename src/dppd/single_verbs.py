@@ -52,6 +52,13 @@ def _print(obj):
     print(obj)
     return obj
 
+@register_verb(name="debug", types=None)
+def _debug(obj, k=5):
+    d = obj.iloc[np.r_[0:k, -k:0]]
+    print(d)
+    return obj
+
+
 
 @register_verb(name="print_type", types=None)
 def _type(obj):
