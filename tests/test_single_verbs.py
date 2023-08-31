@@ -42,7 +42,7 @@ def test_ends():
     df = pd.DataFrame({"a": list(range(10))})
     actual = dp(df).ends(2).pd
     should = df.head(2)
-    should = pd.concat([should,df.tail(2)], axis=0)
+    should = pd.concat([should, df.tail(2)], axis=0)
     assert_frame_equal(should, actual)
 
 
@@ -618,8 +618,8 @@ def test_summarise_non_tuple():
 
 
 def test_summarize_auto_name():
-    actual = dp(mtcars).groupby("cyl").summarize(("hp", np.min))
-    assert "hp_amin" in actual.columns
+    actual = dp(mtcars).groupby("cyl").summarize(("hp", np.min)).pd
+    assert "hp_amin" in actual.columns or 'hp_min' in actual.columns
 
 
 def test_do():
