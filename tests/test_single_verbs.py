@@ -619,7 +619,7 @@ def test_summarise_non_tuple():
 
 def test_summarize_auto_name():
     actual = dp(mtcars).groupby("cyl").summarize(("hp", np.min)).pd
-    assert "hp_amin" in actual.columns or 'hp_min' in actual.columns
+    assert "hp_amin" in actual.columns or "hp_min" in actual.columns
 
 
 def test_do():
@@ -911,9 +911,7 @@ def test_iter_tuples_in_group_by():
     actual = {k: list(v) for (k, v) in dp(mtcars).groupby("cyl").itertuples()}
     should = {}
     for key, sub_df in mtcars.groupby("cyl"):
-        should[
-            key,
-        ] = list(sub_df.itertuples())
+        should[key, ] = list(sub_df.itertuples())
     assert actual == should
 
 
@@ -1002,4 +1000,17 @@ def test_dataframe_from_counter():
     actual = dp(c).to_frame(key_name="X", count_name="Y").pd
     actual = actual.sort_values("X").reset_index(drop=True)
     should = pd.DataFrame({"X": ["a", "l", "m"], "Y": [2, 2, 1]})
-    assert_frame_equal(actual, should, )
+    assert_frame_equal(
+        actual,
+        should,
+    )
+
+
+def test_dataframe_insert():
+    actual = (
+        dp(pd.DataFrame({"x": [1, 2, 3], "y": ["a", "b", "c"]}))
+        .insert(0, "a", [4, 5, 6])
+        .pd
+    )
+    should = pd.DataFrame({"a": [4, 5, 6], "x": [1, 2, 3], "y": ["a", "b", "c"]})
+    assert_frame_equal(actual, should)

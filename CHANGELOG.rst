@@ -6,6 +6,11 @@ Changelog
 unreleased
 ==========
 
+0.26
+====
+- added .dir_dppd() to list just dppd registered verb, not those wrapping the object itself.
+- dp(DataFrame).insert() now returns self and is therefore chainable.
+
 0.25
 ====
 

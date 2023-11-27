@@ -80,7 +80,8 @@ class register_verb:
                     if not self.ignore_redefine:
                         print(verb_registry.keys())
                         warnings.warn(f"redefining verb {real_name} for type {t}")
-                    if t in property_registry and real_name in property_registry[t]:
+                if t in property_registry and real_name in property_registry[t]:
+                    if not self.ignore_redefine:
                         warnings.warn(f"verb {real_name} shadows property for type {t}")
 
             outer.__doc__ == func.__doc__
@@ -139,7 +140,6 @@ class Dppd:
         elif isinstance(df, Dppd):
             df = df.df
         if df is not None and type(df) not in dppd_types:
-
             raise ValueError(
                 f"Dppd was passed a {type(df)} for which no properties have "
                 "been registered. That sounds like a bug."
@@ -176,7 +176,6 @@ class Dppd:
         old = set(dir(self.df))
         new = total - old
         return sorted(new)
-
 
     def __call__(self, df=None):
         if df is None:
