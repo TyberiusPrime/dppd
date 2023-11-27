@@ -989,7 +989,7 @@ def colspec_DataFrame(df, columns, invert=False):
 
 
 @register_verb("pca", types=pd.DataFrame)
-def pca_dataframe(df, whiten=False, random_state=None):
+def pca_dataframe(df, whiten=False, random_state=None, n_components=2):
     """Perform 2 component PCA using sklearn.decomposition.PCA.
     Expects samples in rows!
     Returns a tuple (DataFrame{sample, 1st, 2nd},
@@ -998,7 +998,7 @@ def pca_dataframe(df, whiten=False, random_state=None):
     from sklearn.decomposition import PCA
     import warnings
 
-    p = PCA(n_components=2, whiten=whiten, random_state=random_state)
+    p = PCA(n_components=n_components, whiten=whiten, random_state=random_state)
     df_fit = pd.DataFrame(p.fit_transform(df))
     df_fit.columns = ["1st", "2nd"]
     df_fit.index = df.index
@@ -1008,3 +1008,11 @@ def pca_dataframe(df, whiten=False, random_state=None):
         warnings.simplefilter("ignore")
         df_fit.explained_variance_ratio_ = p.explained_variance_ratio_
     return df_fit
+
+
+@register_verb("insert", types=pd.DataFrame, ignore_redefine=True)
+def insert_return_self(df, loc, column, value, **kwargs):
+    """DataFrame.insert, but return self.
+    """
+    df.insert(loc, column, value, **kwargs)
+    return df

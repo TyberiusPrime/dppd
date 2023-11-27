@@ -21,7 +21,7 @@ class register_verb:
 
     """
 
-    def __init__(self, name=None, types=None, pass_dppd=False):
+    def __init__(self, name=None, types=None, pass_dppd=False, ignore_redefine=False):
         """
         Parameters:
         -----------
@@ -43,6 +43,7 @@ class register_verb:
             if t not in property_registry:
                 property_registry[t] = set()
         self.pass_dppd = pass_dppd
+        self.ignore_redefine = ignore_redefine
 
     def __call__(self, func):
         if self.names is None:
@@ -76,9 +77,11 @@ class register_verb:
                 if (real_name, t) in verb_registry and verb_registry[
                     (real_name, t)
                 ] != func:
-                    warnings.warn(f"redefining verb {real_name} for type {t}")
-                if t in property_registry and real_name in property_registry[t]:
-                    warnings.warn(f"verb {real_name} shadows property for type {t}")
+                    if not self.ignore_redefine:
+                        print(verb_registry.keys())
+                        warnings.warn(f"redefining verb {real_name} for type {t}")
+                    if t in property_registry and real_name in property_registry[t]:
+                        warnings.warn(f"verb {real_name} shadows property for type {t}")
 
             outer.__doc__ == func.__doc__
             for t in self.types:
@@ -166,6 +169,14 @@ class Dppd:
             self._dppd_proxy._self_update_wrapped(self.parent)
             self.X._self_update_wrapped(self.parent.df)
         return result
+
+    def dir_dppd(self):
+        """Return just the newly registered verbs, not the wrapped ones"""
+        total = set(dir(self))
+        old = set(dir(self.df))
+        new = total - old
+        return sorted(new)
+
 
     def __call__(self, df=None):
         if df is None:
