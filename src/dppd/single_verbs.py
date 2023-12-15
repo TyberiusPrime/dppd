@@ -939,7 +939,7 @@ def to_frame_dict(d, **kwargs):
 
 
 @register_verb("norm_0_to_1", types=pd.DataFrame)
-def norm_0_to_1(df, axis=1):
+def norm_0_to_1(df, axis=1, keep_nan=False):
     """Normalize a (numeric) data frame so that
     it goes from 0 to 1 in each row (axis=1) or column (axis=0)
     Usefully for PCA, correlation, etc. because then
@@ -952,6 +952,8 @@ def norm_0_to_1(df, axis=1):
         a2 = 1
     df_normed = df.sub(df.min(axis=a1), axis=a2)
     df_normed = df.div(df.max(axis=a1), axis=a2)
+    if not keep_nan:
+        df_normed = df_normed[~pd.isnull(df_normed).any(axis=1)]
     return df_normed
 
 
@@ -1000,7 +1002,12 @@ def pca_dataframe(df, whiten=False, random_state=None, n_components=2):
 
     p = PCA(n_components=n_components, whiten=whiten, random_state=random_state)
     df_fit = pd.DataFrame(p.fit_transform(df))
-    df_fit.columns = ["1st", "2nd"]
+    cols = ["1st", "2nd"]
+    if n_components > 3:
+        cols.append('3rd')
+    for ii in range(3, n_components):
+        cols.append(f"{ii}th")
+    df_fit.columns = cols
     df_fit.index = df.index
     df_fit.index.name = "sample"
     df_fit = df_fit.reset_index()
@@ -1012,7 +1019,6 @@ def pca_dataframe(df, whiten=False, random_state=None, n_components=2):
 
 @register_verb("insert", types=pd.DataFrame, ignore_redefine=True)
 def insert_return_self(df, loc, column, value, **kwargs):
-    """DataFrame.insert, but return self.
-    """
+    """DataFrame.insert, but return self."""
     df.insert(loc, column, value, **kwargs)
     return df
