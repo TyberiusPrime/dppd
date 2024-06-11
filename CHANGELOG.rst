@@ -6,6 +6,11 @@ Changelog
 unreleased
 ==========
 
+0.27
+====
+
+fixed norm_0_to_1()
+
 0.26
 ====
 - added .dir_dppd() to list just dppd registered verb, not those wrapping the object itself.
