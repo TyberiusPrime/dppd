@@ -1006,7 +1006,7 @@ def pca_dataframe(df, whiten=False, random_state=None, n_components=2):
     if n_components > 2:
         cols.append('3rd')
     for ii in range(3, n_components):
-        cols.append(f"{ii}th")
+        cols.append(f"{ii+1}th")
     df_fit.columns = cols
     df_fit.index = df.index
     df_fit.index.name = "sample"
