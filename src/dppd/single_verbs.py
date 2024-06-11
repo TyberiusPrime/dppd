@@ -1003,7 +1003,7 @@ def pca_dataframe(df, whiten=False, random_state=None, n_components=2):
     p = PCA(n_components=n_components, whiten=whiten, random_state=random_state)
     df_fit = pd.DataFrame(p.fit_transform(df))
     cols = ["1st", "2nd"]
-    if n_components > 3:
+    if n_components > 2:
         cols.append('3rd')
     for ii in range(3, n_components):
         cols.append(f"{ii}th")
