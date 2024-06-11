@@ -2,7 +2,7 @@
   description = "Wraps mbf-bam into an mach-nix importable builder";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/23.11";
   };
 
   outputs = {

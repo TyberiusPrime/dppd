@@ -158,3 +158,12 @@ def test_dataframe_subscript():
         actual = dp.head(5)["name"].pd
     should = mtcars["name"].head(5)
     assert_series_equal(actual, should)
+
+
+def test_T():
+    df = pd.DataFrame(
+        {"a": list(range(10)), "bb": list(range(10)), "ccc": list(range(10))}
+    )
+    should = df.T
+    actual = dp(df).T.pd
+    assert_frame_equal(should, actual)
