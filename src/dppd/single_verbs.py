@@ -79,6 +79,14 @@ def _display(obj):  # pragma: no cover
     display(obj)  # noqa: F821 - Jupyter only, needs to import.
     return obj
 
+@register_verb(name="debug", types=[pd.DataFrame, pd.Series])
+def _debug(obj):  # pragma: no cover
+    """Verb: display head and tail of a DataFrame or Series"""
+    display(ends())  # noqa: F821 - Jupyter only, needs to import.
+    return obj
+
+
+
 
 @register_verb("ungroup", types=[DataFrameGroupBy])
 def ungroup_DataFrameGroupBy(grp):
