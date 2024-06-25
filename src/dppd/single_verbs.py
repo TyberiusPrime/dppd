@@ -56,7 +56,10 @@ def _print(obj):
 @register_verb(name="debug", types=None)
 def _debug(obj, k=5):
     d = obj.iloc[np.r_[0:k, -k:0]]
-    print(d)
+    try:
+        display(d)  # noqa: F821 - Jupyter only, needs to import.
+    except NameError:
+        print(d)
     return obj
 
 
@@ -78,14 +81,6 @@ def _dir(obj):
 def _display(obj):  # pragma: no cover
     display(obj)  # noqa: F821 - Jupyter only, needs to import.
     return obj
-
-@register_verb(name="debug", types=[pd.DataFrame, pd.Series])
-def _debug(obj):  # pragma: no cover
-    """Verb: display head and tail of a DataFrame or Series"""
-    display(ends())  # noqa: F821 - Jupyter only, needs to import.
-    return obj
-
-
 
 
 @register_verb("ungroup", types=[DataFrameGroupBy])
@@ -362,9 +357,12 @@ def mutate_DataFrameGroupBy(grp, **kwargs):
                 try:
                     r = v[group_key]
                 except KeyError:
-                    raise KeyError(
-                        f"Grouped mutate results did not contain data for {group_key}"
-                    )
+                    try:
+                        r = v[group_key,]
+                    except KeyError:
+                        raise KeyError(
+                            f"Grouped mutate results did not contain data for {group_key}. Keys where {v.keys()}"
+                        )
                 r = pd.Series(r, index=sub_index)
                 parts.append(r)
             parts = pd.concat(parts)
@@ -459,7 +457,10 @@ def filter_by(obj, filter_arg):
         for idx, sub_df in df.groupby(groups):
             # if not idx in filter_arg and not isinstance(tuple(idx)):
             # idx = (idx,)
-            keep = filter_arg[idx]
+            try:
+                keep = filter_arg[idx]
+            except KeyError:
+                keep = filter_arg[idx[0]]
             parts.append(sub_df[keep])
         result = pd.concat(parts, axis=0)
     elif isinstance(filter_arg, str):
@@ -1012,7 +1013,7 @@ def pca_dataframe(df, whiten=False, random_state=None, n_components=2):
     df_fit = pd.DataFrame(p.fit_transform(df))
     cols = ["1st", "2nd"]
     if n_components > 2:
-        cols.append('3rd')
+        cols.append("3rd")
     for ii in range(3, n_components):
         cols.append(f"{ii+1}th")
     df_fit.columns = cols

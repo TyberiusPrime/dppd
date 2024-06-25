@@ -526,6 +526,7 @@ def test_groupby_sort_changes_order_but_not_result():
         .ungroup()
         .pd
     )
+    print(a, b)
     assert_frame_equal(a, b.loc[a.index])  #
 
 
@@ -780,14 +781,14 @@ def test_groupby_select():
 
 
 def test_groupby_within_chain():
-    actual = dp(mtcars).groupby("cyl").mean().select("hp").pd
-    should = mtcars.groupby("cyl").mean()[["hp"]]
+    actual = dp(mtcars).groupby("cyl").select("hp").mean().pd
+    should = mtcars.groupby("cyl")[["hp"]].mean()
     assert_frame_equal(should, actual)
 
 
 def test_groupby_within_chain_select_on_group():
     actual = dp(mtcars).groupby("cyl").select("hp").mean().pd
-    should = mtcars.groupby("cyl").mean()[["hp"]]
+    should = mtcars.groupby("cyl")[["hp"]].mean()
     assert_frame_equal(should, actual)
 
 
@@ -911,7 +912,7 @@ def test_iter_tuples_in_group_by():
     actual = {k: list(v) for (k, v) in dp(mtcars).groupby("cyl").itertuples()}
     should = {}
     for key, sub_df in mtcars.groupby("cyl"):
-        should[key, ] = list(sub_df.itertuples())
+        should[key,] = list(sub_df.itertuples())
     assert actual == should
 
 
