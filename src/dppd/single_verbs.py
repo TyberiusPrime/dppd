@@ -960,7 +960,9 @@ def norm_0_to_1(df, axis=1, keep_nan=False):
         a1 = 0
         a2 = 1
     df_normed = df.sub(df.min(axis=a1), axis=a2)
-    df_normed = df.div(df_normed.max(axis=a1), axis=a2)
+    assert df_normed.min().min() == 0.0
+    df_normed = df_normed.div(df_normed.max(axis=a1), axis=a2)
+    assert df_normed.max().max() == 1.0
     if not keep_nan:
         df_normed = df_normed[~pd.isnull(df_normed).any(axis=1)]
     return df_normed
