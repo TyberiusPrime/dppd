@@ -215,7 +215,7 @@ def test_interleaved_context_managers():
             dpX.summarize(("hp", np.mean, "mean_hp"))
             dpY.summarize(("price", np.max, "max_price"))
     should_X = (
-        mtcars.groupby("cyl")[["hp"]].agg(np.mean).rename(columns={"hp": "mean_hp"})
+        mtcars.groupby("cyl")[["hp"]].agg('mean').rename(columns={"hp": "mean_hp"})
     ).reset_index()
     should_Y = (
         pd.DataFrame(diamonds[diamonds.cut == "Ideal"].max()[["price"]])

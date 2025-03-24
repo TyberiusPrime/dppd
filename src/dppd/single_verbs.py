@@ -23,14 +23,20 @@ register_type_methods_as_verbs(SeriesGroupBy, [])
 
 
 def group_variables(grp):
-    return grp.grouper.names
+    if hasattr(grp, "_grouper"):
+        return grp._grouper.names
+    else:
+        return grp.grouper.names
 
 
 def group_extract_params(grp):
-    if grp.axis != 0:
+    if hasattr(grp, "axis") and grp.axis != 0:
         raise ValueError(f"Verbs assume that groupby is on axis=0, was {grp.axis}")
     res = {"by": group_variables(grp)}
-    for k in ["squeeze", "axis", "level", "as_index", "sort", "group_keys", "observed"]:
+    attrs = ["squeeze", "level", "as_index", "sort", "group_keys", "observed"]
+    if pd.__version__ < "2.1.":
+        attrs.append("axis")
+    for k in attrs:
         if hasattr(grp, k):
             res[k] = getattr(grp, k)
         else:  # pragma: no cover
@@ -552,7 +558,7 @@ def summarize(obj, *args):
         result = result[groups + [x for x in result.columns if x not in groups]]
         # restore category to categories
         for g in groups:
-            if pd.api.types.is_categorical_dtype(df[g]):
+            if isinstance(df.dtypes[g], pd.CategoricalDtype):
                 result = result.assign(
                     **{
                         g: pd.Categorical(
@@ -612,7 +618,7 @@ def do(obj, func, *args, **kwargs):
         result = result[groups + [x for x in result.columns if x not in groups]]
         # restore category to categories
         for g in groups:
-            if pd.api.types.is_categorical_dtype(df[g]):
+            if isinstance(df.dtypes[g], pd.CategoricalDtype):
                 result = result.assign(
                     **{
                         g: pd.Categorical(
@@ -776,7 +782,10 @@ def seperate(df, column, new_names, sep=".", remove=False):
 
 @register_verb("print", types=DataFrameGroupBy)
 def print_DataFrameGroupBy(grps):
-    print("groups: %s" % (grps.grouper.names))
+    if hasattr(grps, "_grouper"):
+        print("groups: %s" % (grps._grouper.names))
+    else:
+        print("groups: %s" % (grps.grouper.names))
     print(grps._selected_obj)
     return grps
 
@@ -818,7 +827,7 @@ def arrange_DataFrameGroupBy(grp, column_spec, kind="quicksort", na_position="la
     columns = grp_params["by"].copy()
     ascending = [True] * len(columns)
     columns += [x[0] for x in cols_plus_inversed]
-    ascending += [~x[1] for x in cols_plus_inversed]
+    ascending += [not x[1] for x in cols_plus_inversed]
     df_out = df.sort_values(
         columns, ascending=ascending, kind=kind, na_position=na_position
     )

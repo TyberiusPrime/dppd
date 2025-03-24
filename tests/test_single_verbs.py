@@ -466,7 +466,9 @@ def test_groupby_two_summarize_grouped():
     actual = (
         dp(diamonds).groupby(["color", "cut"]).summarise(("price", len, "count")).pd
     )
-    should = pd.DataFrame(diamonds.groupby(["color", "cut"])["price"].agg("count"))
+    should = pd.DataFrame(
+        diamonds.groupby(["color", "cut"], observed=False)["price"].agg("count")
+    )
     should.columns = ["count"]
     should = should.reset_index()
     assert_frame_equal(should, actual)
@@ -800,8 +802,14 @@ def test_groupby_axis_1_raises_on_verb():
 
 
 def test_grouped_filter_by_X_apply():
-    actual = dp(mtcars).groupby("cyl").filter_by(X.apply(len) > 10).ungroup().pd
-    g = mtcars.groupby("cyl").apply(len) > 10
+    actual = (
+        dp(mtcars)
+        .groupby("cyl")
+        .filter_by(X.apply(len, include_groups=False) > 10)
+        .ungroup()
+        .pd
+    )
+    g = mtcars.groupby("cyl").apply(len, include_groups=False) > 10
     should = mtcars[mtcars.cyl.isin(g.index[g])]
     assert_frame_equal(should, actual, check_column_order=False)
 
@@ -817,7 +825,13 @@ def test__lenght_of_series():
 
 
 def test_grouped_mutate_X_apply():
-    actual = dp(mtcars).groupby("cyl").mutate(count=X.apply(len)).ungroup().pd
+    actual = (
+        dp(mtcars)
+        .groupby("cyl")
+        .mutate(count=X.apply(len, include_groups=False))
+        .ungroup()
+        .pd
+    )
     should = dp(mtcars).groupby("cyl").add_count().ungroup().pd
     assert_frame_equal(should, actual, check_column_order=False, check_dtype=False)
 
@@ -826,7 +840,7 @@ def test_grouped_mutate_X_apply_str():
     actual = (
         dp(mtcars)
         .groupby("cyl")
-        .mutate(count=X.apply(lambda x: str(len(x))))
+        .mutate(count=X.apply(lambda x: str(len(x)), include_groups=False))
         .ungroup()
         .pd
     )
