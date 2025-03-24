@@ -215,7 +215,7 @@ def test_interleaved_context_managers():
             dpX.summarize(("hp", np.mean, "mean_hp"))
             dpY.summarize(("price", np.max, "max_price"))
     should_X = (
-        mtcars.groupby("cyl")[["hp"]].agg('mean').rename(columns={"hp": "mean_hp"})
+        mtcars.groupby("cyl")[["hp"]].agg("mean").rename(columns={"hp": "mean_hp"})
     ).reset_index()
     should_Y = (
         pd.DataFrame(diamonds[diamonds.cut == "Ideal"].max()[["price"]])
@@ -340,11 +340,13 @@ def test_dir():
 
 
 def test_version_is_correct():
-    import configparser
     from pathlib import Path
-    import dppd as org_dppd
+    try:
+        import tomllib
+        import dppd as org_dppd
 
-    c = configparser.ConfigParser()
-    c.read(Path(__file__).parent.parent / "setup.cfg")
-    version = c["metadata"]["version"]
-    assert version == org_dppd.__version__
+        c = tomllib.load(open(Path(__file__).parent.parent / "pyproject.toml", "rb"))
+        version = c["project"]["version"]
+        assert version == org_dppd.__version__
+    except ImportError:
+        pass # python < 3.11

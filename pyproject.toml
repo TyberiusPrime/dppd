@@ -3,7 +3,11 @@ name = "dppd"
 version = "0.29"
 description = "A pythonic dplyr clone"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.9"
+authors = [
+	{name = "Florian Finkernagel", email = "finkernagel@imt.uni-marburg.de"}
+]
+license="MIT"
 dependencies = [
     "natsort",
     "numpy",
@@ -11,12 +15,17 @@ dependencies = [
     "wrapt",
 ]
 
+[project.urls]
+Documentation = "https://dppd.readthedocs.io/en/latest/"
+Repository = "https://github.com/TyberiusPrime/dppd"
+
 [build-system]
 requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
 	dev = [
+	"build",
     "numpydoc",
 	"plotnine",
     "pytest",
@@ -45,6 +54,4 @@ filterwarnings = [
     "ignore:::patsy.constraint:13",
     "ignore:::matplotlib.backends.backend_wx:",
 ]
-
-
 
