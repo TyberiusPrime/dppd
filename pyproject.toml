@@ -1,13 +1,13 @@
 [project]
 name = "dppd"
-version = "0.30"
+version = "0.31"
 description = "A pythonic dplyr clone"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
 	{name = "Florian Finkernagel", email = "finkernagel@imt.uni-marburg.de"}
 ]
-license="MIT"
+license={file="LICENSE.txt"}
 dependencies = [
     "natsort",
     "numpy",
