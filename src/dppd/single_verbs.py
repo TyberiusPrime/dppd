@@ -883,6 +883,15 @@ def categorize_DataFrame(df, columns=None, categories=use_df_order, ordered=None
         new = {}
         for c in columns:
             new[c] = pd.Categorical(df[c], natsort.natsorted(df[c].unique()), ordered)
+    elif isinstance(categories, str) and categories in ("-natsorted", "-natsort"):
+        import natsort
+
+        new = {}
+        for c in columns:
+            new[c] = pd.Categorical(
+                df[c], list(reversed(natsort.natsorted(df[c].unique()))), ordered
+            )
+
     else:
         new = {c: pd.Categorical(df[c], categories, ordered) for c in columns}
 
@@ -1026,7 +1035,7 @@ def pca_dataframe(df, whiten=False, random_state=None, n_components=2):
     if n_components > 2:
         cols.append("3rd")
     for ii in range(3, n_components):
-        cols.append(f"{ii+1}th")
+        cols.append(f"{ii + 1}th")
     df_fit.columns = cols
     df_fit.index = df.index
     df_fit.index.name = "sample"
