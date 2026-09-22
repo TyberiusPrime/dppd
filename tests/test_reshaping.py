@@ -126,8 +126,8 @@ def test_spread_raises_on_duplicate_values():
 def test_seperate():
     df = pd.DataFrame({"X": [None, "a.b", "a.d", "b.c"]})
     actual = dp(df).seperate(X.X, ["A", "B"]).pd
-    assert actual.A.iloc[0] is None
-    assert actual.B.iloc[0] is None
+    assert pd.isnull(actual.A.iloc[0])
+    assert pd.isnull(actual.B.iloc[0])
     assert (actual.A.iloc[1:] == ["a", "a", "b"]).all()
     assert (actual.B.iloc[1:] == ["b", "d", "c"]).all()
     assert "X" in actual.columns
@@ -136,8 +136,8 @@ def test_seperate():
 def test_seperate_and_remove():
     df = pd.DataFrame({"X": [None, "a.b", "a.d", "b.c"]})
     actual = dp(df).seperate(X.X, ["A", "B"], remove=True).pd
-    assert actual.A.iloc[0] is None
-    assert actual.B.iloc[0] is None
+    assert pd.isnull(actual.A.iloc[0])
+    assert pd.isnull(actual.B.iloc[0])
     assert (actual.A.iloc[1:] == ["a", "a", "b"]).all()
     assert (actual.B.iloc[1:] == ["b", "d", "c"]).all()
     assert "X" not in actual.columns

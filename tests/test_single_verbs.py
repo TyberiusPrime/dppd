@@ -795,10 +795,10 @@ def test_groupby_within_chain_select_on_group():
 
 
 def test_groupby_axis_1_raises_on_verb():
-    # this is ok
-    dp(mtcars).groupby(level=0, axis=1).pd
-    with pytest.raises(ValueError):
-        dp(mtcars).groupby(level=0, axis=1).select("cyl")
+    # this is no longer ok with pandas 3
+    #dp(mtcars).T.groupby(level=0).pd
+    with pytest.raises(AttributeError):
+        dp(mtcars).T.groupby(level=0).select("cyl")
 
 
 def test_grouped_filter_by_X_apply():
@@ -842,6 +842,7 @@ def test_grouped_mutate_X_apply_str():
         .groupby("cyl")
         .mutate(count=X.apply(lambda x: str(len(x)), include_groups=False))
         .ungroup()
+        .mutate(count=X["count"].astype(str))
         .pd
     )
     should = (
