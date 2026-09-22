@@ -260,10 +260,10 @@ def test_dppd_raises_on_non_dataframe():
 
 def test_straight_dp_raises():
     dp, X = dppd()
-    with pytest.raises(ValueError):
+    with pytest.raises(AttributeError):
         dp.select(["hp", "cyl"])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(AttributeError):
         dp.loc[5]
 
 

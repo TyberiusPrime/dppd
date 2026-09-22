@@ -1,6 +1,6 @@
 [project]
 name = "dppd"
-version = "0.31"
+version = "0.31.1"
 description = "A pythonic dplyr clone"
 readme = "README.md"
 requires-python = ">=3.9"

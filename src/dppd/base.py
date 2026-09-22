@@ -192,7 +192,7 @@ class Dppd:
                 "%s object has no attribute '__qualname__'" % (type(self))
             )
         if self.df is None:
-            raise ValueError("Dppd not initialized with a DataFrame")
+            raise AttributeError("Dppd not initialized with a DataFrame")
         if (attr, type(self.df)) in verb_registry:
             return verb_registry[attr, type(self.df)](self)
         elif (attr, None) in verb_registry:
