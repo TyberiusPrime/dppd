@@ -3,7 +3,7 @@ name = "dppd"
 version = "0.31.1"
 description = "A pythonic dplyr clone"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 authors = [
 	{name = "Florian Finkernagel", email = "finkernagel@imt.uni-marburg.de"}
 ]
